@@ -1,9 +1,5 @@
-html{
-    height: 100%;
-}
 body{
     font-family: 'Source Sans Pro', sans-serif;
-    min-height: 100%;
 }
 .bg-custom{
     background-color: rgb(151, 8, 8);
@@ -19,6 +15,9 @@ body{
     border-radius: 10px;
 }
 
+.marg-top{
+    margin-top: 90px;
+}
 .forgot{
     text-decoration: none;
 }

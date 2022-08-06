@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 
 
 # Create your views here.
-def change_password(PasswordChangeView):
+class PasswordsChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
     success_url = reverse_lazy('login_student')
     
@@ -23,7 +23,22 @@ def login_admin(request):
     return render(request, "login_admin.html")
 
 def login_student(request):
-    return render(request, "login_student.html")
+    if request.method == 'POST':
+        userrr = request.POST.get('username')
+        passw = request.POST.get('password') 
+        request.session['username'] = userrr
+        user = authenticate(request, username=userrr,password=passw)
+
+        if user is not None:
+            login(request, user)
+            return redirect('book_app_student')
+
+        else:
+            messages.info(request,'Username/Password is Incorrect')
+    
+    context = {
+    }
+    return render(request, "login_student.html", context)
 
 def signup_student(request):
     signup = CreateUserForm()

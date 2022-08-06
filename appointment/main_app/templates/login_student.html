@@ -30,19 +30,21 @@
         <div class="card card_custom-2">
             <i class='bx bxs-user-rectangle bx-custom text-center'></i>
             <br>
-            <form action="{% url 'book_app_student' %}">
+            <form action="" method="POST">
+                {% csrf_token %}
                 <h3 class="text-center">Student - Login</h3>
                 <br>
                 <div class="form-outline mb-4">
-                    <input type="text" id="form1Example2" class="form-control" placeholder="Email"/>
+                    <input type="text" id="form1Example2" name="username" class="form-control" placeholder="Username"/>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="password" id="form1Example2" class="form-control" placeholder="Password"/>
+                    <input type="password" id="form1Example2" name="password" class="form-control" placeholder="Password"/>
                 </div>
                 <div class="row mb-4">
                   <div class="col">
                     <a href="#" class="forgot">Forgot password?</a>
                     <p>Don't have an Account? <a href="{% url 'signup_student' %}" class="forgot">Register Here</a></p>
+                    <a href="{% url 'password' %}">Change Pass</a>
                   </div>
                 </div>
                 <div class="text-center">

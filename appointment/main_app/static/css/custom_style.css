@@ -5,9 +5,7 @@ body{
     background-color: rgb(151, 8, 8);
 }
 .custom-title{
-    color: white !important;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 .card_custom{
     border: none;
@@ -45,7 +43,21 @@ body{
     position: relative;
     display: flex;
 }
-
+.tup-title{
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.icon-flex{
+    display: flex;
+    align-items: center;
+}
+.bx-right{
+    margin-right: 5px;
+}
+.bx-left{
+    margin-left: 5px;
+}
 
 
 @media only screen and (max-width: 445px) {

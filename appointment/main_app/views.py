@@ -23,18 +23,20 @@ def login_admin(request):
     return render(request, "login_admin.html")
 
 def login_student(request):
-    if request.method == 'POST':
-        userrr = request.POST.get('username')
-        passw = request.POST.get('password') 
-        request.session['username'] = userrr
-        user = authenticate(request, username=userrr,password=passw)
+    if request.user.is_authenticated:
+        return redirect ('book_app_student')
+    else:
+        if request.method == 'POST':
+            userrr = request.POST.get('username')
+            passw = request.POST.get('password') 
+            request.session['username'] = userrr
+            user = authenticate(request, username=userrr,password=passw)
+            if user is not None:
+                login(request, user)
+                return redirect('book_app_student')
 
-        if user is not None:
-            login(request, user)
-            return redirect('book_app_student')
-
-        else:
-            messages.info(request,'Username/Password is Incorrect')
+            else:
+                messages.info(request,'Username/Password is Incorrect')
     
     context = {
     }
@@ -61,6 +63,7 @@ def signup_admin(request):
 def book_app(request):
     return render(request, "book_app.html")
 
+@login_required(login_url='login_student')
 def book_app_student(request):
     return render(request, "book_app_student.html")
 
@@ -69,4 +72,8 @@ def css_form(request):
 
 def admin_site(request):
     return render(request, "admin_site.html")
+
+def logoutStudent(request):
+    logout(request)
+    return redirect('login_student')
 

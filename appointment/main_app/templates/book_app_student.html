@@ -15,11 +15,24 @@
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-custom">
-        <div class="container">
-            <div class="container-fluid flex-nav">
-                <img class="image-nav" src="{% static 'assets/tupclogo.png' %}" width="70" alt="">
-                <h4 class="custom-title">Technological University of the Philippines</h4>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+        <div class="container-fluid container">
+          <div class="tup-title">
+            <img class="image-nav" src="{% static 'assets/tupclogo.png' %}" width="70" alt="">
+            <h4 class="custom-title">Technological University of the Philippines</h4> 
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link icon-flex" id="color-c"  href="{% url 'password' %}" ><i class='bx bxs-user bx-right'></i> Account Settings </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link icon-flex" id="color-c"  href="{% url 'logout_student' %}">Logout <i class='bx bx-exit bx-left'></i></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -161,9 +174,8 @@
                         <textarea class="form-control" placeholder="Type your purpose of visit." id="floatingTextarea2" style="height: 100px"></textarea>
                     </div>
                 </div>
-                <a href="change-password.html">Change Pass</a>
                 <div class="text-center">
-                    <a class="btn btn-danger" href="{% url 'Home' %}">Back</a>
+                    <a class="btn btn-secondary" href="{% url 'Home' %}">Back</a>
                     <button class="btn btn-danger">Submit Form</button>
                 </div>
             </div>

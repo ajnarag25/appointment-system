@@ -14,6 +14,7 @@ urlpatterns = [
     path('book_app_student/', views.book_app_student, name="book_app_student"),
     path('css_form/', views.css_form, name="css_form"),
     path('admin_site/', views.admin_site, name="admin_site"),
-    path('password/', auth_views.PasswordChangeView.as_view(), name="password"),
+    path('password/', PasswordsChangeView.as_view(template_name='change-password.html'), name="password"),
+    path('logout', views.logoutStudent, name="logout_student"),
 
 ]

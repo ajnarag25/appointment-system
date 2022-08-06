@@ -18,8 +18,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-custom">
         <div class="container">
             <div class="container-fluid flex-nav">
-                <img class="image-nav" src="{% static 'assets/tupclogo.png' %}" width="70" alt="">
-                <h4 class="custom-title">Technological University of the Philippines</h4>
+                <div class="tup-title">
+                    <img class="image-nav" src="{% static 'assets/tupclogo.png' %}" width="70" alt="">
+                    <h4 class="custom-title">Technological University of the Philippines</h4> 
+                  </div>
             </div>
         </div>
     </nav>
@@ -57,7 +59,7 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <a class="btn btn-danger" href="{% url 'login_student' %}">Back</a>
+                    <a class="btn btn-secondary" href="{% url 'login_student' %}">Back</a>
                     <button type="submit" class="btn btn-danger">Sign up</button>
                 </div>
               </form>

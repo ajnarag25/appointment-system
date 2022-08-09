@@ -14,6 +14,10 @@ urlpatterns = [
     path('book_app_student/', views.book_app_student, name="book_app_student"),
     path('css_form/', views.css_form, name="css_form"),
     path('admin_site/', views.admin_site, name="admin_site"),
+    path('dashboard/', views.dashboard, name="dashboard"),
+    path('create_manage/', views.create_manage, name="create_manage"),
+    path('appointments/', views.appointments, name="appointments"),
+    path('user/', views.user, name="user"),
     path('password/', PasswordsChangeView.as_view(template_name='change-password.html'), name="password"),
     path('logout', views.logoutStudent, name="logout_student"),
 

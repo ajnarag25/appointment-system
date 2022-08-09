@@ -70,10 +70,24 @@ def book_app_student(request):
 def css_form(request):
     return render(request, "css_form.html")
 
-def admin_site(request):
-    return render(request, "admin_site.html")
-
 def logoutStudent(request):
     logout(request)
     return redirect('login_student')
 
+
+#ADMIN
+def admin_site(request):
+    return render(request, "admin_site.html")
+
+#SUPERUSER
+def dashboard(request):
+    return render(request, "dashboard.html")
+
+def create_manage(request):
+    return render(request, "create_manage.html")
+
+def appointments(request):
+    return render(request, "appointments.html")
+
+def user(request):
+    return render(request, "user.html")

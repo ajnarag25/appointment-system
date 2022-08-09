@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -46,10 +47,12 @@ def signup_student(request):
     signup = CreateUserForm()
     if request.method == 'POST':
         signup = CreateUserForm(request.POST)
-        messages.info(request,'Something went wrong!')
         if signup.is_valid():
+            signup.instance.is_staff = True
             signup.save()
             return redirect('login_student')
+        else:
+            messages.info(request,'Invalid Credentials!')
 
     context = {
         'signup': signup,

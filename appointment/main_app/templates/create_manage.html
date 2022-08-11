@@ -116,36 +116,38 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form>
+                  <form method="POST">
+                    {% csrf_token %}
                     <h6 class="text-center">Please Fill up the necessary information needed</h6>
                     <br>
                     <div class="form-outline mb-4">
-                      <select name="" class="form-control" id="">
+                      <select name="department" class="form-control" id="">
                         <option value="" selected disabled>Select Department</option>
-                        <option value="">Office of Academic Affair (OAA)</option>
-                        <option value="">Department of Information Technology (DIT)</option>
-                        <option value="">Department of Liberal Arts (DLA)</option>
-                        <option value="">Office of Campus Library (OCL)</option>
-                        <option value="">Office of Research and Extension (ORE)</option>
-                        <option value="">Department of Mathematics and Science (DMS)</option>
-                        <option value="">Department of Engineering (DOE)</option>
-                        <option value="">Department of (DED)</option>
-                        <option value="">University Information Technology Center (UITC)</option>
-                        <option value="">Department of Physical Education (DPE)</option>
+                        <option value="OAA">Office of Academic Affair (OAA)</option>
+                        <option value="DIT">Department of Information Technology (DIT)</option>
+                        <option value="DLA">Department of Liberal Arts (DLA)</option>
+                        <option value="OCL">Office of Campus Library (OCL)</option>
+                        <option value="ORE">Office of Research and Extension (ORE)</option>
+                        <option value="DMS">Department of Mathematics and Science (DMS)</option>
+                        <option value="DOE">Department of Engineering (DOE)</option>
+                        <option value="OSA">Office of Student Affairs (OSA)</option>
+                        <option value="UITC">University Information Technology Center (UITC)</option>
+                        <option value="DPE">Department of Physical Education (DPE)</option>
+                        <option value="SD">Security Department (SD)</option>
                     </select>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="Username" required/>
+                        <input type="text" class="form-control" name="username" placeholder="Enter Username" required/>
                       </div>
                     <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="Email" required/>
+                        <input type="text" class="form-control" name="username" placeholder="Enter Email" required/>
                       </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <input type="password" class="form-control" placeholder="Password" required/>
+                            <input type="password" class="form-control" name="password1" placeholder="Enter Password" required/>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="password" class="form-control" placeholder="Re-type Password" required/>
+                            <input type="password" class="form-control" name="password2" placeholder="Retype Password" required/>
                         </div>
                     </div>
                     <br>
@@ -386,6 +388,19 @@
   <script src="{% static 'assets/js/perfect-scrollbar.jquery.min.js' %}"></script>
   <script src="{% static 'assets/js/now-ui-dashboard.min.js' %}" type="text/javascript"></script>
   <script src="{% static 'assets/js/demo.js' %}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+ </script>
+    {% for message in messages %}
+    <script>
+        Swal.fire({
+            title: '{{message}}',
+            icon: 'error',
+            confirmButtonColor: '#d33',
+            })
+    </script>
+    {% endfor %}
+
 </body>
 
 </html>

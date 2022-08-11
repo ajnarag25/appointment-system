@@ -106,6 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#add the auth model
+AUTH_USER_MODEL = 'main_app.depts'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

@@ -44,9 +44,9 @@ def login_student(request):
     return render(request, "login_student.html", context)
 
 def signup_student(request):
-    signup = CreateUserForm()
+    signup = student_reg()
     if request.method == 'POST':
-        signup = CreateUserForm(request.POST)
+        signup = student_reg(request.POST)
         if signup.is_valid():
             signup.instance.is_staff = True
             signup.save()
@@ -87,7 +87,20 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 def create_manage(request):
-    return render(request, "create_manage.html")
+    signup_admin = admin_reg()
+    if request.method == 'POST':
+        signup_admin = admin_reg(request.POST)
+        print(signup_admin)
+        if signup_admin.is_valid():
+            signup_admin.save()
+            return redirect('create_manage')
+        else:
+            messages.info(request,'Invalid Credentials!')
+
+    context = {
+        'signup_admin': signup_admin,
+    }
+    return render(request, "create_manage.html", context)
 
 def appointments(request):
     return render(request, "appointments.html")

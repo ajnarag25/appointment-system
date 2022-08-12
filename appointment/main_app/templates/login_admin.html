@@ -32,26 +32,31 @@
         <div class="card card_custom-2">
             <i class='bx bxs-user-rectangle bx-custom text-center'></i>
             <br>
-            <form action="{% url 'admin_site' %}">
+            <form method="POST">
+                {% csrf_token %}
                 <h3 class="text-center">Admin - Login</h3>
                 <br>
                 <div class="form-outline mb-4">
-                    <select name="" class="form-select" id="">
+                    <select name="department" class="form-select" id="" required>
                         <option value="" selected disabled>Select Department</option>
-                        <option value="">Office of Academic Affair (OAA)</option>
-                        <option value="">Department of Information Technology (DIT)</option>
-                        <option value="">Department of Liberal Arts (DLA)</option>
-                        <option value="">Office of Campus Library (OCL)</option>
-                        <option value="">Office of Research and Extension (ORE)</option>
-                        <option value="">Department of Mathematics and Science (DMS)</option>
-                        <option value="">Department of Engineering (DOE)</option>
-                        <option value="">Department of (DED)</option>
-                        <option value="">University Information Technology Center (UITC)</option>
-                        <option value="">Department of Physical Education (DPE)</option>
+                        <option value="OAA">Office of Academic Affair (OAA)</option>
+                        <option value="DIT">Department of Information Technology (DIT)</option>
+                        <option value="DLA">Department of Liberal Arts (DLA)</option>
+                        <option value="OCL">Office of Campus Library (OCL)</option>
+                        <option value="ORE">Office of Research and Extension (ORE)</option>
+                        <option value="DMS">Department of Mathematics and Science (DMS)</option>
+                        <option value="DOE">Department of Engineering (DOE)</option>
+                        <option value="OSA">Office of Student Affairs (OSA)</option>
+                        <option value="UITC">University Information Technology Center (UITC)</option>
+                        <option value="DPE">Department of Physical Education (DPE)</option>
+                        <option value="SD">Security Department (SD)</option>
                     </select>
                 </div>
                 <div class="form-outline mb-4">
-                  <input type="password" id="form1Example2" class="form-control" placeholder="Password"/>
+                    <input type="text" id="" class="form-control" name="username" placeholder="Username" required/>
+                  </div>
+                <div class="form-outline mb-4">
+                  <input type="password" id="" class="form-control" name="password" placeholder="Password" required/>
                 </div>
                 <div class="row mb-4">
                   <div class="col">
@@ -70,11 +75,21 @@
 
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
          AOS.init({
             duration: 3000,
             once: true,
         });
     </script>
+    {% for message in messages %}
+    <script>
+        Swal.fire({
+            title: '{{message}}',
+            icon: 'error',
+            confirmButtonColor: '#d33',
+            })
+    </script>
+    {% endfor %}
 </body>
 </html>

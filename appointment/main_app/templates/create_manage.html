@@ -121,7 +121,7 @@
                     <h6 class="text-center">Please Fill up the necessary information needed</h6>
                     <br>
                     <div class="form-outline mb-4">
-                      <select name="department" class="form-control" id="">
+                      <select name="department" class="form-control" id="" required>
                         <option value="" selected disabled>Select Department</option>
                         <option value="OAA">Office of Academic Affair (OAA)</option>
                         <option value="DIT">Department of Information Technology (DIT)</option>
@@ -140,8 +140,14 @@
                         <input type="text" class="form-control" name="username" placeholder="Enter Username" required/>
                       </div>
                     <div class="form-outline mb-4">
-                        <input type="text" class="form-control" name="username" placeholder="Enter Email" required/>
+                        <input type="text" class="form-control" name="email" placeholder="Enter Email" required/>
                       </div>
+                      <ul style="text-align: left;">
+                        <li>Password can't be too similar to other personal information.</li>
+                        <li>Password must conatain at least 8 characters.</li>
+                        <li>Password can't be a commonly used password.</li>
+                        <li>Password can't be entirely numeric.</li>
+                    </ul>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <input type="password" class="form-control" name="password1" placeholder="Enter Password" required/>

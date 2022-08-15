@@ -1,3 +1,5 @@
+from dataclasses import field
+from pyexpat import model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -18,3 +20,7 @@ class PasswordChangingForm(PasswordChangeForm):
         model = depts
         fields = ['old_password','new_password1','new_password2']
  
+class appointmentGuest(forms.ModelForm):
+	class Meta:
+		model = appointmentForm
+		fields = '__all__'

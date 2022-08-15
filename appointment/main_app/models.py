@@ -18,3 +18,19 @@ class depts(AbstractUser):
     ]
     
     department = models.CharField(max_length=200, choices = admintype, verbose_name = 'department')
+
+class appointmentForm(models.Model):
+    firstname = models.CharField(max_length=100)
+    middlename = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    contact = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
+    yrlevel = models.IntegerField()
+    yrgraduate = models.IntegerField()
+    studentnum = models.CharField(max_length=100)
+    dept = models.CharField(max_length=100)
+    contactperson = models.CharField(max_length=100)
+    pdate = models.CharField(max_length=100)
+    ptime = models.CharField(max_length=100)
+    purpose = models.CharField(max_length=100) 

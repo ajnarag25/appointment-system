@@ -96,6 +96,14 @@ def signup_student(request):
 
 
 def book_app(request):
+    get_appointment = appointmentGuest(request.POST or None)
+    if request.method == 'POST':
+        if get_appointment.is_valid():
+            get_appointment.save()
+            return redirect('book_app')
+        else:
+            messages.info(request,'Something went wrong')
+
     return render(request, "book_app.html")
 
 @login_required(login_url='login_student')

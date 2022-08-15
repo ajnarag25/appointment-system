@@ -33,4 +33,5 @@ class appointmentForm(models.Model):
     contactperson = models.CharField(max_length=100)
     pdate = models.CharField(max_length=100)
     ptime = models.CharField(max_length=100)
-    purpose = models.CharField(max_length=100) 
+    purpose = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="status") 

@@ -1,3 +1,5 @@
+from tkinter.messagebox import NO
+from tkinter.tix import STATUS
 from urllib import request
 from django.shortcuts import redirect, render
 from django.shortcuts import render
@@ -96,6 +98,7 @@ def signup_student(request):
 
 
 def book_app(request):
+    get_data = depts.objects.filter(is_staff = 0).values()
     get_appointment = appointmentGuest(request.POST or None)
     if request.method == 'POST':
         if get_appointment.is_valid():
@@ -104,7 +107,11 @@ def book_app(request):
         else:
             messages.info(request,'Something went wrong')
 
-    return render(request, "book_app.html")
+    context = {
+        'names': get_data
+    }
+    print(context)
+    return render(request, "book_app.html", context)
 
 @login_required(login_url='login_student')
 def book_app_student(request):
@@ -127,8 +134,17 @@ def logoutStudent(request):
 #ADMIN
 @login_required(login_url='login_admin')
 def admin_site(request):
-    get_user = request.session['username']
     get_dept = request.session['department']
+    get_id_approved = request.POST.get('id')
+    get_id_declined = request.POST.get('id')
+
+    appointmentForm.objects.filter(id = get_id_approved).update(status='APPROVED')
+    appointmentForm.objects.filter(id = get_id_declined).update(status='DECLINED')
+
+    get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
+    get_appointment_approved = appointmentForm.objects.filter(dept = get_dept).filter(status='APPROVED').values()
+    get_appointment_declined = appointmentForm.objects.filter(dept = get_dept).filter(status='DECLINED').values()
+    get_appointment_history = appointmentForm.objects.filter(dept = get_dept).values()
 
     if get_dept == "OAA":
         set_val = 'Office of Academic Affair'
@@ -154,11 +170,13 @@ def admin_site(request):
         set_val = 'Security Department'
 
     context = {
-        'dept_name' : set_val 
+        'dept_name' : set_val,
+        'dept_val_1' : get_appointment_pending,
+        'dept_val_2': get_appointment_approved, 
+        'dept_val_3': get_appointment_declined, 
+        'dept_val_4': get_appointment_history, 
     }
 
-    print(get_user)
-    print(get_dept)
 
     return render(request, "admin_site.html", context)
 

@@ -135,11 +135,17 @@ def logoutStudent(request):
 @login_required(login_url='login_admin')
 def admin_site(request):
     get_dept = request.session['department']
-    get_id_approved = request.POST.get('id')
-    get_id_declined = request.POST.get('id')
+    get_id_approved = request.POST.get('id_accept')
+    get_id_declined = request.POST.get('id_decline')
 
-    appointmentForm.objects.filter(id = get_id_approved).update(status='APPROVED')
-    appointmentForm.objects.filter(id = get_id_declined).update(status='DECLINED')
+
+    checkapp1 = appointmentForm.objects.filter(id = get_id_approved).update(status='APPROVED')
+    if checkapp1 == 1:
+        messages.info(request,'Successfully Approved')
+
+    checkapp2 = appointmentForm.objects.filter(id = get_id_declined).update(status='DECLINED')
+    if checkapp2 == 1:
+        messages.info(request,'Successfully Declined')
 
     get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
     get_appointment_approved = appointmentForm.objects.filter(dept = get_dept).filter(status='APPROVED').values()

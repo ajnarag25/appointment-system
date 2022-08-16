@@ -14,44 +14,30 @@
   <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
   <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
   <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-      <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
 <body class="hold-transition skin-red sidebar-mini">
 <div class="wrapper">
 
-  <!-- Main Header -->
   <header class="main-header">
-    <!-- Logo -->
     <a href="" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">TUPC</span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">TUPC Admin Site</span>
     </a>
 
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- User Account Menu -->
           <li class="dropdown user user-menu">
-            <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
               <img src="{% static 'assets/tupclogo.png' %}" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">{{dept_name}}</span>
             </a>
             <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="{% static 'assets/tupclogo.png' %}" class="img-circle" alt="User Image">
 
@@ -60,7 +46,6 @@
                 </p>
 
               </li>
-              <!-- Menu Footer-->
               <li class="user-footer">
                 <div>
                   <a href="{% url 'logout_admin' %}" class="btn btn-success btn-flat btn-block">Log out</a>
@@ -72,13 +57,9 @@
       </div>
     </nav>
   </header>
-  <!-- Left side column. contains the logo and sidebar -->
+
   <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
           <img src="{% static 'assets/tupclogo.png' %}" class="img-circle" alt="User Image">
@@ -87,33 +68,27 @@
           <p>Welcome, <br> Administrator</p>
         </div>
       </div>
-
-      <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Main Navigation</li>
-        <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{% url 'logout_admin' %}"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
       </ul>
-      <!-- /.sidebar-menu -->
     </section>
-    <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
+
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Technological University of the Philippines - Cavite
         <small>Online Appointment</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i>Appointment Tables</a></li>
-        <li><a href="#pending"><i class="fa fa-table"></i>Pending</a></li>
-        <li><a href="#approve"><i class="fa fa-table"></i>Accepted</a></li>
-        <li><a href="#declined"><i class="fa fa-table"></i>Declined</a></li>
-        <li><a href="#history"><i class="fa fa-table"></i>History</a></li>
+        <li><a href="#"><i class="fa fa-table"></i>Appointment Tables</a></li>
+        <li><a href="#pending"><i class="fa fa-clock-o"></i>Pending</a></li>
+        <li><a href="#approve"><i class="fa fa-check"></i>Accepted</a></li>
+        <li><a href="#declined"><i class="fa fa-close"></i>Declined</a></li>
+        <li><a href="#history"><i class="fa fa-history"></i>History</a></li>
       </ol>
     </section>
 
@@ -152,41 +127,52 @@
                   <div class="btn-group">
                     <form method="POST">
                       {% csrf_token %}
-                      <button type="button" class="btn btn-success btn-sm" id="myBtnAccept">Accept</button>
-                      <div id="myModal1" class="modal">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <span class="close1">&times;</span>
-                            <h3>Accepting the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
-                          </div>
-                          <div class="modal-body">
-                            <h4>Do you want to accept the appointment of this student?</h4>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" value="{{d.id}}" name="id_accept">
-                            <button type="submit" class="btn btn-success btn-sm" >Accept</button>
-                            <button type="button" class="btn btn-danger btn-sm cancel1">Cancel</button>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ d.id }}">Accept</button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="accept{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="accept{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Accept Appointment</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Accepting the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to accept the appointment of this student?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_accept">
+                              <button type="submit" class="btn btn-success btn-sm" >Accept</button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </form>
                     <form method="POST">
                       {% csrf_token %}
-                      <input type="hidden" value="{{d.id}}" name="id_decline">
-                      <button type="button" class="btn btn-danger btn-sm" id="myBtnDecline">Decline</button>
-                      <div id="myModal2" class="modal">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <span class="close2">&times;</span>
-                            <h3>Declining the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
-                          </div>
-                          <div class="modal-body">
-                            <h4>Do you want to decline the appointment of this student?</h4>
-                          </div>
-                          <div class="modal-footer">
-                            <input type="hidden" value="{{d.id}}" name="id_decline">
-                            <button type="submit" class="btn btn-success btn-sm" >Decline</button>
-                            <button type="button" class="btn btn-danger btn-sm cancel2">Cancel</button>
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}">Decline</button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="decline{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="decline{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Decline Appointment</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Declining the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to decline the appointment of this student?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_decline">
+                              <button type="submit" class="btn btn-danger btn-sm" >Decline</button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -230,8 +216,32 @@
                 <td>{{d.purpose}}</td>
                 <td>
                   <div class="btn-group">
+                    <form method="POST">
+                      {% csrf_token %}
                     <button type="button" class="btn btn-info btn-sm">CSS Form</button>
-                    <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}">Cancel</button>
+                      <div class="modal fade" id="decline{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="decline{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Cancel Appointment</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Canceling the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to cancel the appointment of this student?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_decline">
+                              <button type="submit" class="btn btn-danger btn-sm" >Cancel</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </td>
               </tr>
@@ -272,8 +282,33 @@
                 <td>{{d.purpose}}</td>
                 <td>
                   <div class="btn-group">
+                    <form method="POST">
+                      {% csrf_token %}
                     <button type="button" class="btn btn-success btn-sm">Compose</button>
-                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}">Delete</button>
+                      <div class="modal fade" id="delete{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="delete{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Delete Appointment</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Deleting the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Are you sure you want to delete peremanently the appointment of this student?</h4>
+                              <p>This action is irreversible!</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_delete">
+                              <button type="submit" class="btn btn-danger btn-sm" >Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </td>
               </tr>
@@ -325,20 +360,14 @@
             </tbody>
           </table>
         </div>
-        <!-- /.box-body -->
       </div>
     </section>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
     <div class="pull-right hidden-xs">
       Online Appointment
     </div>
-    <!-- Default to the left -->
     <strong><a target="_blank" href="https://www.tupcavite.edu.ph/">Technological University of the Philippines - Cavite</a></strong>
   </footer>
 
@@ -351,7 +380,7 @@
 <script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
 <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
 <script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
-<script src="{% static 'js/modal.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {% for message in messages %}

@@ -28,39 +28,11 @@
 
     
     <div class="container marg-top justify-content-center" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true" >
-        <h1 align ="center">Book an Appointment</h1>
+        <h1 align ="center">Book an Appointment - Guest</h1>
         <br>
         <div class="card card_custom-2" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">
             <form class="row g-3" method="POST">
                 {% csrf_token %}
-                <div class="w-100"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="radioStudent" value="option1" checked>
-                            <label class="form-check-label" for="radioStudent">
-                            Student
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="radioAlumni" value="option1" checked>
-                            <label class="form-check-label" for="radioAlumni">
-                            Alumni
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="radioGuest" value="option1" checked>
-                            <label class="form-check-label" for="radioGuest">
-                            Guest
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-4">
                         <label for="inputFirst" class="form-label">First name</label>
@@ -86,36 +58,8 @@
                         <input type="number" class="form-control" id="inputContact" name="contact" required>
                     </div>
                 </div> 
-                <div class="w-100"></div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <label for="inputCourse" class="form-label">Select Course</label>
-                        <select id="inputCourse" class="form-select" name="course" required>
-                        <option selected>Courses.</option>
-                        <option>BSME</option>
-                        <option>BSCE</option>
-                        <option>BSEE</option>
-                        <option>BSIE</option>
-                        <option>BET-COET</option>
-                        <option>BET-CET</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputYearl" class="form-label">Year Level</label>
-                        <input type="number" class="form-control" id="inputYearl" name="yrlevel" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputYearg" class="form-label">Year Graduated</label>
-                        <input type="number" class="form-control" id="inputYearg" name="yrgraduate" required>
-                    </div>
-                </div> 
-                <div class="w-100"></div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="inputIdn" class="form-label">Student ID</label>
-                        <input type="text" class="form-control" id="inputIdn" name="studentnum" required>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="inputDept" class="form-label">Department</label>
                         <select id="inputDept" class="form-select" name="dept" required>
                         <option selected>Select Department</option>
@@ -132,7 +76,7 @@
                         <option>SD</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="inputContactP" class="form-label">Contact Person</label>
                         <select id="inputContactP" class="form-select" name="contactperson" required>
                         <option selected>Select Contact Person</option>
@@ -157,7 +101,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="floatingTextarea2">Purpose</label>
+                        <input type="hidden" class="form-control" id="" name="yrlevel" value=0>
+                        <input type="hidden" class="form-control" id="" name="course" value="N/A">
+                        <input type="hidden" class="form-control" id="" name="yrgraduate" value=0>
+                        <input type="hidden" class="form-control" id="" name="studentnum" value="N/A" >
                         <input type="hidden" class="form-control" id="" name="status" value="PENDING" >
+                        <input type="hidden" class="form-control" id="" name="notes" value="N/A" >
+                        <input type="hidden" class="form-control" id="" name="username" value="N/A" >
+                        <input type="hidden" class="form-control" id="" name="user" value="Guest" >
                         <textarea class="form-control" placeholder="Type your purpose of visit." id="floatingTextarea2" style="height: 100px" name="purpose" required></textarea>
                     </div>
                 </div>
@@ -167,8 +118,6 @@
                 </div>
             </div>
 
-            
-        
         </form>
     </div>
 
@@ -178,12 +127,23 @@
 
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
          AOS.init({
             duration: 3000,
             once: true,
         });
     </script>
+    {% for message in messages %}
+    <script>
+        Swal.fire({
+            title: '{{message}}',
+            icon: 'success',
+            confirmButtonColor: '#d33',
+            })
+    </script>
+    {% endfor %}
 
 </body>
 </html>

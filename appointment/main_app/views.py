@@ -61,7 +61,6 @@ def login_student(request):
         if request.method == 'POST':
             userrr = request.POST.get('username')
             passw = request.POST.get('password') 
-            request.session['username'] = userrr
             user = authenticate(request, username=userrr,password=passw)
             if user is not None:
                 get_staff = depts.objects.get(username=userrr)
@@ -70,6 +69,7 @@ def login_student(request):
                     return redirect('login_student')
                 else:
                     login(request, user)
+                    request.session['username_student'] = userrr
                     return redirect('book_app_student')
 
             else:
@@ -102,20 +102,33 @@ def book_app(request):
     get_appointment = appointmentGuest(request.POST or None)
     if request.method == 'POST':
         if get_appointment.is_valid():
+            print(get_appointment)
             get_appointment.save()
+            messages.info(request,'Successfully Submitted')
             return redirect('book_app')
-        else:
-            messages.info(request,'Something went wrong')
 
     context = {
         'names': get_data
     }
-    print(context)
     return render(request, "book_app.html", context)
 
 @login_required(login_url='login_student')
 def book_app_student(request):
-    return render(request, "book_app_student.html")
+    get_user = request.session['username_student']
+    get_data = depts.objects.filter(is_staff = 0).values()
+    get_appointment = appointmentGuest(request.POST or None)
+    if request.method == 'POST':
+        if get_appointment.is_valid():
+            print(get_appointment)
+            get_appointment.save()
+            messages.info(request,'Successfully Submitted')
+            return redirect('book_app_student')
+
+    context = {
+        'names': get_data,
+        'username': get_user
+    }
+    return render(request, "book_app_student.html", context)
 
 def css_form(request):
     return render(request, "css_form.html")
@@ -183,7 +196,7 @@ def admin_site(request):
 
     context = {
         'dept_name' : set_val,
-        'dept_val_1' : get_appointment_pending,
+        'dept_val_1': get_appointment_pending,
         'dept_val_2': get_appointment_approved, 
         'dept_val_3': get_appointment_declined, 
         'dept_val_4': get_appointment_history, 

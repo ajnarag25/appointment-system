@@ -34,4 +34,7 @@ class appointmentForm(models.Model):
     pdate = models.CharField(max_length=100)
     ptime = models.CharField(max_length=100)
     purpose = models.CharField(max_length=100)
-    status = models.CharField(max_length=100, default="status") 
+    username = models.CharField(max_length=100)
+    status = models.CharField(max_length=100) 
+    notes = models.CharField(max_length=100)
+    user = models.CharField(max_length=100)

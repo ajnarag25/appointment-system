@@ -114,12 +114,38 @@
                 </div>
                 <div class="text-center">
                     <a class="btn btn-secondary" href="{% url 'Home' %}">Back</a>
-                    <button type="submit" class="btn btn-danger">Submit Form</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#review" id="checkrev" class="btn btn-danger">Submit Form</button>
                 </div>
             </div>
 
-        </form>
     </div>
+                <div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Review Submission</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 id="fname"></h5>
+                                <h5 id="mname"></h5>
+                                <h5 id="lname"></h5>
+                                <h5 id="email"></h5>
+                                <h5 id="contact"></h5>
+                                <h5 id="dept"></h5>
+                                <h5 id="contactperson"></h5>
+                                <h5 id="pdate"></h5>
+                                <h5 id="ptime"></h5>
+                                <h5 id="purpose"></h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger" name="">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
     <br><br>
 
@@ -144,6 +170,31 @@
             })
     </script>
     {% endfor %}
-
+    <script>
+        $(document).ready(function(){
+            $('#checkrev').click(function(){
+                i1 = $('#inputFirst').val();
+                i2 = $('#inputMiddle').val();
+                i3 = $('#inputLast').val();
+                i4 = $('#inputEmail').val();
+                i5 = $('#inputContact').val();
+                i6 = $('#inputDept').val();
+                i7 = $('#inputContactP').val();
+                i8 = $('#inputDate').val();
+                i9 = $('#inputTime').val();
+                i10 = $('#floatingTextarea2').val();
+                document.getElementById('fname').innerHTML = "Firstname:" + " " + i1;
+                document.getElementById('mname').innerHTML = "Middlename:" + " " + i2;
+                document.getElementById('lname').innerHTML = "Lastname:" + " " + i3;
+                document.getElementById('email').innerHTML = "Email:" + " " + i4;
+                document.getElementById('contact').innerHTML = "Contact No:" + " " + i5;
+                document.getElementById('dept').innerHTML = "Department:" + " " + i6;
+                document.getElementById('contactperson').innerHTML = "Contact Person:" + " " + i7;
+                document.getElementById('pdate').innerHTML = "Preferred Date:" + " " + i8;
+                document.getElementById('ptime').innerHTML = "Preferred Time:" + " " + i9;
+                document.getElementById('purpose').innerHTML = "Purpose:" + " " + i10;
+            })
+        })
+    </script>
 </body>
 </html>

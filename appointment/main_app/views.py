@@ -117,6 +117,7 @@ def book_app_student(request):
     get_user = request.session['username_student']
     get_data = depts.objects.filter(is_staff = 0).values()
     get_appointment = appointmentGuest(request.POST or None)
+    print(get_appointment)
     if request.method == 'POST':
         if get_appointment.is_valid():
             print(get_appointment)

@@ -109,6 +109,7 @@
                 <th>Name</th>
                 <th>Course</th>
                 <th>Year Level</th>
+                <th>Year Graduate</th>
                 <th>Person Needed</th>
                 <th>Purpose</th>
                 <th>Action</th>
@@ -123,13 +124,14 @@
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
                 <td>{{d.yrlevel}} year/s</td>
+                <td>{{d.yrgraduate}} year/s</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>
                   <div class="btn-group">
                     <form method="POST">
                       {% csrf_token %}
-                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ d.id }}">Accept</button>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ d.id }}"><span><i class="fa fa-check"></i></span></button>
                       <!-- Modal -->
                       <div class="modal fade" id="accept{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="accept{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -155,7 +157,7 @@
                     </form>
                     <form method="POST">
                       {% csrf_token %}
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}">Decline</button>
+                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}"><span><i class="fa fa-close"></i></span></button>
                       <!-- Modal -->
                       <div class="modal fade" id="decline{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="decline{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -202,6 +204,7 @@
                 <th>Name</th>
                 <th>Course</th>
                 <th>Year Level</th>
+                <th>Year Graduate</th>
                 <th>Person Needed</th>
                 <th>Purpose</th>
                 <th>Action</th>
@@ -216,6 +219,7 @@
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
                 <td>{{d.yrlevel}} year/s</td>
+                <td>{{d.yrgraduate}} year/s</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>
@@ -270,8 +274,10 @@
                 <th>Name</th>
                 <th>Course</th>
                 <th>Year Level</th>
+                <th>Year Graduate</th>
                 <th>Person Needed</th>
                 <th>Purpose</th>
+                <th>Note</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -284,14 +290,40 @@
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
                 <td>{{d.yrlevel}} year/s</td>
+                <td>{{d.yrgraduate}} year/s</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
+                <td>{{d.notes}}</td>
                 <td>
                   <div class="btn-group">
                     <form method="POST">
                       {% csrf_token %}
-                    <button type="button" class="btn btn-success btn-sm">Compose</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}">Delete</button>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
+                      <div class="modal fade" id="compose{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="compose{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Compose Message for : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h5 for="">Compose Message:</h5>
+                              <textarea class="form-control" id="" name="compose_msg" cols="70" rows="5" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_compose">
+                              <button type="submit" class="btn btn-success btn-sm" >Send</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form method="POST">
+                      {% csrf_token %}
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}"><span><i class="fa fa-close"></i></span></button>
                       <div class="modal fade" id="delete{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="delete{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
@@ -339,6 +371,7 @@
                 <th>Name</th>
                 <th>Course</th>
                 <th>Year Level</th>
+                <th>Year Graduate</th>
                 <th>Person Needed</th>
                 <th>Purpose</th>
                 <th>Status</th>
@@ -353,6 +386,7 @@
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
                 <td>{{d.yrlevel}} year/s</td>
+                <td>{{d.yrgraduate}} year/s</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>

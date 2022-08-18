@@ -115,9 +115,14 @@ def book_app(request):
 @login_required(login_url='login_student')
 def book_app_student(request):
     get_user = request.session['username_student']
+    get_form_user = appointmentForm.objects.filter(username = get_user)
     get_data = depts.objects.filter(is_staff = 0).values()
     get_appointment = appointmentGuest(request.POST or None)
-    print(get_appointment)
+
+    store_form_user_data = []
+    for x in get_form_user:
+        store_form_user_data.append(x)
+
     if request.method == 'POST':
         if get_appointment.is_valid():
             print(get_appointment)
@@ -127,9 +132,37 @@ def book_app_student(request):
 
     context = {
         'names': get_data,
-        'username': get_user
+        'username': get_user,
+        'get_user_data': store_form_user_data
     }
     return render(request, "book_app_student.html", context)
+
+
+@login_required(login_url='login_student')
+def book_app_alumni(request):
+    get_user = request.session['username_student']
+    get_form_user = appointmentForm.objects.filter(username = get_user)
+    get_data = depts.objects.filter(is_staff = 0).values()
+    get_appointment = appointmentGuest(request.POST or None)
+
+    store_form_user_data = []
+    for x in get_form_user:
+        store_form_user_data.append(x)
+
+    if request.method == 'POST':
+        if get_appointment.is_valid():
+            print(get_appointment)
+            get_appointment.save()
+            messages.info(request,'Successfully Submitted')
+            return redirect('book_app_alumni')
+
+    context = {
+        'names': get_data,
+        'username': get_user,
+        'get_user_data': store_form_user_data
+    }
+    return render(request, "book_app_alumni.html", context)
+
 
 def css_form(request):
     return render(request, "css_form.html")
@@ -149,10 +182,16 @@ def logoutStudent(request):
 @login_required(login_url='login_admin')
 def admin_site(request):
     get_dept = request.session['department']
+    get_compose_msg = request.POST.get('compose_msg')
     get_id_approved = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
     get_id_delete = request.POST.get('id_delete')
+    get_id_compose = request.POST.get('id_compose')
 
+    if get_compose_msg != None:
+        appointmentForm.objects.filter(id = get_id_compose).update(notes=get_compose_msg)
+        messages.info(request,'Message has been sent')
+        
     if get_id_delete != None:
         delete_app = appointmentForm.objects.filter(id=get_id_delete)
         delete_app.delete()

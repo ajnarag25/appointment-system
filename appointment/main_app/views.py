@@ -191,7 +191,7 @@ def admin_site(request):
     if get_compose_msg != None:
         appointmentForm.objects.filter(id = get_id_compose).update(notes=get_compose_msg)
         messages.info(request,'Message has been sent')
-        
+
     if get_id_delete != None:
         delete_app = appointmentForm.objects.filter(id=get_id_delete)
         delete_app.delete()
@@ -256,9 +256,8 @@ def create_manage(request):
         print(signup_admin)
         if signup_admin.is_valid():
             signup_admin.save()
+            messages.info(request,'Successfully Created Admin Account!')
             return redirect('create_manage')
-        else:
-            messages.info(request,'Invalid Credentials!')
 
     context = {
         'signup_admin': signup_admin,

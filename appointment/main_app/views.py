@@ -12,7 +12,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 class PasswordsChangeView(PasswordChangeView):
@@ -61,6 +62,13 @@ def login_student(request):
         if request.method == 'POST':
             userrr = request.POST.get('username')
             passw = request.POST.get('password') 
+            # check_pass = depts.objects.filter(username = userrr).values()
+            # print(check_pass)
+            # for p in check_pass:
+            #     checkpass = p['password']
+            #     print(checkpass)
+            #     matchcheck= check_password(passw, checkpass)
+            #     print(matchcheck)
             user = authenticate(request, username=userrr,password=passw)
             if user is not None:
                 get_staff = depts.objects.get(username=userrr)
@@ -188,6 +196,20 @@ def admin_site(request):
     get_id_delete = request.POST.get('id_delete')
     get_id_compose = request.POST.get('id_compose')
 
+    get_name = request.POST.get('student_name')
+    if get_name != None:
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('student_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = 'We would like you to fill-up our CSS form we already accepted your appointment.' + ' ' + 'Please click the link provided to open the css form' + ' http://127.0.0.1:8000/css_form/' + ' ' + 'Thank you have a nice day.'  
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
+        messages.info(request,'Css Form has been sent')
+        
     if get_compose_msg != None:
         appointmentForm.objects.filter(id = get_id_compose).update(notes=get_compose_msg)
         messages.info(request,'Message has been sent')

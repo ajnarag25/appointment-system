@@ -226,8 +226,34 @@
                   <div class="btn-group">
                     <form method="POST">
                       {% csrf_token %}
-                    <button type="button" class="btn btn-info btn-sm">CSS Form</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}">Cancel</button>
+                      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#cssform{{ d.id }}"><span><i class="fa fa-book"></i></span></button>
+                      <div class="modal fade" id="cssform{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="decline{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Send CSS Form</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Send CSS Form for : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Send CSS Form now?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_cssform">
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name">
+                              <input type="hidden" value="{{d.email}}" name="student_email">
+                              <button type="submit" class="btn btn-primary btn-sm" >Yes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form method="POST">
+                      {% csrf_token %}
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}"><span><i class="fa fa-close"></i></span></button>
                       <div class="modal fade" id="decline{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="decline{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
@@ -462,6 +488,7 @@
       'info'        : true,
       'autoWidth'   : true
     })
+
   })
 </script>
 

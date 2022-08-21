@@ -111,7 +111,9 @@
                 <h4 class="card-title"> <i class="now-ui-icons users_single-02"></i> Students</h4>
               </div>
               <div class="card-body text-center">
-                <h1>5</h1>
+                {% for student in length2 %}
+                <h1>{{student}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -122,7 +124,9 @@
                 <h4 class="card-title"><i class="now-ui-icons users_circle-08"></i> Administrator</h4>
               </div>
               <div class="card-body text-center">
-                <h1>12</h1>
+                {% for admin in length1 %}
+                <h1>{{admin}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -133,7 +137,9 @@
                 <h4 class="card-title"><i class="now-ui-icons files_single-copy-04"></i> Appointments</h4>
               </div>
               <div class="card-body text-center">
-                  <h1>112</h1>
+                {% for appointment in length3 %}
+                <h1>{{appointment}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -147,93 +153,20 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Department
-                      </th>
-                      <th>
-                        Position
-                      </th>
-                      <th class="text-right">
-                        Action
-                      </th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Department</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      
+                      {% for f in faculty %}
+                        <tr>
+                          <td>{{f.first_name}} {{f.last_name}}</td>
+                          <td>{{f.email}}</td>
+                          <td>{{f.department}}</td>
+                        </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>

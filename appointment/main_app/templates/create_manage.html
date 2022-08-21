@@ -14,6 +14,7 @@
   <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
   <link href="{% static 'assets/css/now-ui-dashboard.css' %}" rel="stylesheet" />
   <link href="{% static 'assets/css/demo.css' %}" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 </head>
 
 <body class="">
@@ -184,95 +185,34 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table">
-                  <thead class=" text-primary">
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Department
-                    </th>
-                    <th>
-                      Position
-                    </th>
-                    <th class="text-right">
-                      Action
-                    </th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        Dakota Rice
-                      </td>
-                      <td>
-                        Niger
-                      </td>
-                      <td>
-                        Oud-Turnhout
-                      </td>
-                      <td class="text-right">
-                        $36,738
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Minerva Hooper
-                      </td>
-                      <td>
-                        Curaçao
-                      </td>
-                      <td>
-                        Sinaai-Waas
-                      </td>
-                      <td class="text-right">
-                        $23,789
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Sage Rodriguez
-                      </td>
-                      <td>
-                        Netherlands
-                      </td>
-                      <td>
-                        Baileux
-                      </td>
-                      <td class="text-right">
-                        $56,142
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Doris Greene
-                      </td>
-                      <td>
-                        Malawi
-                      </td>
-                      <td>
-                        Feldkirchen in Kärnten
-                      </td>
-                      <td class="text-right">
-                        $63,542
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Mason Porter
-                      </td>
-                      <td>
-                        Chile
-                      </td>
-                      <td>
-                        Gloucester
-                      </td>
-                      <td class="text-right">
-                        $78,615
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead class=" text-primary">
+                      <th>Name</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Department</th>
+                      <th>Last Login</th>
+                      <th>Date Joined</th>
+                      <th>Action</th>
+                    </thead>
+                    <tbody>
+                      {% for f in faculty %}
+                        <tr>
+                          <td>{{f.first_name}} {{f.last_name}}</td>
+                          <td>{{f.username}}</td>
+                          <td>{{f.email}}</td>
+                          <td>{{f.department}}</td>
+                          <td>{{f.last_login}}</td>
+                          <td>{{f.date_joined}}</td>
+                          <td>
+                            <button class="btn btn-success"><i class='bx bxs-edit' ></i></button>
+                            <button class="btn btn-danger"><i class='bx bxs-trash' ></i></button>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
               </div>
             </div>
           </div>
@@ -285,93 +225,27 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                   <thead class=" text-primary">
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Department
-                    </th>
-                    <th>
-                      Position
-                    </th>
-                    <th class="text-right">
-                      Action
-                    </th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Last Login</th>
+                    <th>Date Joined</th>
+                    <th>Action</th>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        Dakota Rice
-                      </td>
-                      <td>
-                        Niger
-                      </td>
-                      <td>
-                        Oud-Turnhout
-                      </td>
-                      <td class="text-right">
-                        $36,738
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Minerva Hooper
-                      </td>
-                      <td>
-                        Curaçao
-                      </td>
-                      <td>
-                        Sinaai-Waas
-                      </td>
-                      <td class="text-right">
-                        $23,789
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Sage Rodriguez
-                      </td>
-                      <td>
-                        Netherlands
-                      </td>
-                      <td>
-                        Baileux
-                      </td>
-                      <td class="text-right">
-                        $56,142
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Doris Greene
-                      </td>
-                      <td>
-                        Malawi
-                      </td>
-                      <td>
-                        Feldkirchen in Kärnten
-                      </td>
-                      <td class="text-right">
-                        $63,542
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Mason Porter
-                      </td>
-                      <td>
-                        Chile
-                      </td>
-                      <td>
-                        Gloucester
-                      </td>
-                      <td class="text-right">
-                        $78,615
-                      </td>
-                    </tr>
-                    
+                    {% for s in student %}
+                      <tr>
+                        <td>{{s.username}}</td>
+                        <td>{{s.email}}</td>
+                        <td>{{s.last_login}}</td>
+                        <td>{{s.date_joined}}</td>
+                        <td>
+                          <button class="btn btn-success"><i class='bx bxs-edit' ></i></button>
+                          <button class="btn btn-danger"><i class='bx bxs-trash' ></i></button>
+                        </td>
+                      </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

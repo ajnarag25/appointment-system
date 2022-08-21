@@ -1,3 +1,4 @@
+from multiprocessing import context
 from tkinter.messagebox import NO
 from tkinter.tix import STATUS
 from urllib import request
@@ -62,13 +63,6 @@ def login_student(request):
         if request.method == 'POST':
             userrr = request.POST.get('username')
             passw = request.POST.get('password') 
-            # check_pass = depts.objects.filter(username = userrr).values()
-            # print(check_pass)
-            # for p in check_pass:
-            #     checkpass = p['password']
-            #     print(checkpass)
-            #     matchcheck= check_password(passw, checkpass)
-            #     print(matchcheck)
             user = authenticate(request, username=userrr,password=passw)
             if user is not None:
                 get_staff = depts.objects.get(username=userrr)
@@ -269,9 +263,31 @@ def admin_site(request):
 
 #SUPERUSER
 def dashboard(request):
-    return render(request, "dashboard.html")
+    get_faculty = depts.objects.filter(is_staff = 0).values()
+    get_student = depts.objects.filter(is_staff = 1).values()
+    get_appointments = appointmentForm.objects.all()
+
+    store_length_1 = len(get_faculty) 
+    save_length_1 = [store_length_1]
+
+    store_length_2 = len(get_student) 
+    save_length_2 = [store_length_2]
+
+    store_length_3 = len(get_appointments) 
+    save_length_3 = [store_length_3]
+
+    context = {
+        'faculty': get_faculty,
+        'length1': save_length_1,
+        'length2': save_length_2,
+        'length3': save_length_3,
+    }
+    return render(request, "dashboard.html", context)
 
 def create_manage(request):
+    get_faculty = depts.objects.filter(is_staff = 0).values()
+    get_student = depts.objects.filter(is_staff = 1).values()
+
     signup_admin = admin_reg()
     if request.method == 'POST':
         signup_admin = admin_reg(request.POST)
@@ -283,6 +299,8 @@ def create_manage(request):
 
     context = {
         'signup_admin': signup_admin,
+        'faculty': get_faculty,
+        'student': get_student,
     }
     return render(request, "create_manage.html", context)
 

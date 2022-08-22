@@ -24,3 +24,8 @@ class appointmentGuest(forms.ModelForm):
 	class Meta:
 		model = appointmentForm
 		fields = '__all__'
+
+class formcss(forms.ModelForm):
+	class Meta:
+		model = cssform
+		fields = '__all__'

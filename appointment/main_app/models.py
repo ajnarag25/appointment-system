@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -38,3 +39,18 @@ class appointmentForm(models.Model):
     status = models.CharField(max_length=100) 
     notes = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
+
+class cssform(models.Model):
+    name = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    user = models.CharField(max_length=100)
+    transaction = models.CharField(max_length=100)
+    signature = models.CharField(max_length=100)
+    timeliness = models.IntegerField()
+    completeness = models.IntegerField()
+    professionalism = models.IntegerField()
+    courteousness = models.IntegerField()
+    overall = models.IntegerField()
+    feedback = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100)

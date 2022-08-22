@@ -43,7 +43,7 @@
           <li class="active">
             <a href="{% url 'appointments' %}">
               <i class="now-ui-icons files_single-copy-04"></i>
-              <p>Appointments</p>
+              <p>Appointments & CSS forms</p>
             </a>
           </li>
           <li>
@@ -105,158 +105,144 @@
       </div>
       <div class="content">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-3">
             <div class="card card-chart" style="background-color: rgb(157, 255, 173);">
               <div class="card-header text-center">
                 <h4 class="card-title"> Approved Appointments <i class="now-ui-icons ui-1_check"></i></h4>
               </div>
               <div class="card-body text-center">
-                <h1>201</h1>
+                {% for approved in get_length_approved %}
+                <h1>{{approved}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6">
+          <div class="col-lg-3 col-md-4">
             <div class="card card-chart" style="background-color: rgb(248, 255, 157);">
               <div class="card-header text-center">
                 <h4 class="card-title"> Pending Appointments <i class="now-ui-icons arrows-1_refresh-69"></i></h4>
               </div>
               <div class="card-body text-center">
-                <h1>150</h1>
+                {% for pending in get_length_pending %}
+                <h1>{{pending}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6">
+          <div class="col-lg-3 col-md-4">
             <div class="card card-chart" style="background-color: rgb(255, 160, 160);">
               <div class="card-header text-center">
                 <h4 class="card-title"> Canceled Appointments <i class="now-ui-icons ui-1_simple-remove"></i></h4>
               </div>
               <div class="card-body text-center">
-                  <h1>10</h1>
+                {% for declined in get_length_declined %}
+                <h1>{{declined}}</h1>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <div class="card card-chart" style="background-color: rgb(146, 255, 246);">
+              <div class="card-header text-center">
+                <h4 class="card-title"> CSS Form Submitted <i class="now-ui-icons files_single-copy-04"></i></h4>
+              </div>
+              <div class="card-body text-center">
+                {% for cssform in get_length_cssform %}
+                <h1>{{cssform}}</h1>
+                {% endfor %}
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-category">All Active Department Faculty Members</h5>
-                <h4 class="card-title">Faculty Members</h4>
+                <h4 class="card-title" style="color: rgb(69, 90, 212);">List of Appointments</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-hover">
                     <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Department
-                      </th>
-                      <th>
-                        Position
-                      </th>
-                      <th class="text-right">
-                        Action
-                      </th>
+                      <th>Requested Time</th>
+                      <th>Requested Date</th>
+                      <th>User</th>
+                      <th>Name</th>
+                      <th>Course</th>
+                      <th>Year Level</th>
+                      <th>Year Graduate</th>
+                      <th>Person Needed</th>
+                      <th>Purpose</th>
+                      <th>Status</th>
                     </thead>
                     <tbody>
+                      {% for d in dept_val %}
                       <tr>
+                        <td>{{d.ptime}}</td>
+                        <td>{{d.pdate}}</td>
+                        <td>{{d.user}}</td>
+                        <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
+                        <td>{{d.course}}</td>
+                        <td>{{d.yrlevel}} year/s</td>
+                        <td>{{d.yrgraduate}} year/s</td>
+                        <td>{{d.contactperson}}</td>
+                        <td>{{d.purpose}}</td>
                         <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
+                          {% if d.status == 'PENDING' %}
+                          <span class="" style="color: rgb(201, 201, 46);">Pending</span></td>
+                          {% elif d.status == 'APPROVED' %}
+                          <span class="" style="color: green;">Approved</span></td>
+                          {% elif d.status == 'DECLINED' %}
+                          <span class="" style="color: rgb(184, 38, 38);">Declined</span></td>
+                          {% endif %}
                       </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="card  card-tasks">
-              <div class="card-header ">
-                <h5 class="card-category">Departments in TUP-C</h5>
-                <h4 class="card-title">Departments</h4>
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title" style="color: rgb(69, 90, 212);">List of CSS (Customer Satisfaction Survey) Form</h4>
               </div>
-              <div class="card-body ">
-                <ul>
-                  <li><h6>Office of Academic Affair (OAA)</h6></li>
-                  <li><h6>Department of Information Technology (DIT)</h6></li>
-                  <li><h6>Department of Liberal Arts (DLA)</h6></li>
-                  <li><h6>Office of Campus Library (OCL)</h6></li>
-                  <li><h6>Office of Research and Extension (ORE)</h6></li>
-                  <li><h6>Department of Mathematics and Science (DMS)</h6></li>
-                  <li><h6>Department of Engineering (DOE)</h6></li>
-                  <li><h6>Department of (DED)</h6></li>
-                  <li><h6>University Information Technology Center (UITC)</h6></li>
-                  <li><h6>Department of Physical Education (DPE)</h6></li>
-                </ul>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead class=" text-primary">
+                      <th>#</th>
+                      <th>Contact</th>
+                      <th>Email</th>
+                      <th>Transaction</th>
+                      <th>Timeliness/Efficiency</th>
+                      <th>Completeness/Accuracy</th>
+                      <th>Professionalism</th>
+                      <th>Courteousness</th>
+                      <th>Overall Satisfaction</th>
+                      <th>Feedback</th>
+                      <th>Comments</th>
+                    </thead>
+                    <tbody>
+                      {% for c in css_form_data %}
+                      <tr>
+                        <td>{{c.id}}</td>
+                        <td>{{c.contact}}</td>
+                        <td>{{c.email}}</td>
+                        <td>{{c.transaction}}</td>
+                        <td>{{c.timeliness}}</td>
+                        <td>{{c.completeness}}</td>
+                        <td>{{c.professionalism}}</td>
+                        <td>{{c.courteousness}}</td>
+                        <td>{{c.overall}}</td>
+                        <td>{{c.feedback}}</td>
+                        <td>{{c.comment}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

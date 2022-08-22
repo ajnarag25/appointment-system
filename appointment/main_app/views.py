@@ -167,6 +167,15 @@ def book_app_alumni(request):
 
 
 def css_form(request):
+    get_css_form = formcss(request.POST or None)
+    print(get_css_form)
+    if request.method == 'POST':
+        if get_css_form.is_valid():
+            print(get_css_form)
+            get_css_form.save()
+            messages.info(request,'Successfully Submitted')
+            return redirect('css_form')
+
     return render(request, "css_form.html")
 
 
@@ -195,7 +204,7 @@ def admin_site(request):
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('student_email')
         hostemail = 'tupcappointment2022@gmail.com'
-        msg = 'We would like you to fill-up our CSS form we already accepted your appointment.' + ' ' + 'Please click the link provided to open the css form' + ' http://127.0.0.1:8000/css_form/' + ' ' + 'Thank you have a nice day.'  
+        msg = 'We would like you to fill-up our CSS form we already accepted your appointment.' + '\n' + 'Please click the link provided to open the css form' + ' http://127.0.0.1:8000/css_form/' + '\n' + 'Thank you have a nice day.' + '\n \n' + '- TUPC_APPOINTMENT_2022'  
         send_mail(
             composed_name_header,
             msg,
@@ -305,7 +314,34 @@ def create_manage(request):
     return render(request, "create_manage.html", context)
 
 def appointments(request):
-    return render(request, "appointments.html")
+    get_appointment_pending = appointmentForm.objects.filter(status='PENDING').values()
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
+    get_appointment_declined = appointmentForm.objects.filter(status='DECLINED').values()
+    get_appointment_history = appointmentForm.objects.all()
+    get_css_form = cssform.objects.all()
+
+    store_length_pending = len(get_appointment_pending)
+    save_length_pending = [store_length_pending]
+
+    store_length_approved = len(get_appointment_approved)
+    save_length_approved = [store_length_approved]
+
+    store_length_decline = len(get_appointment_declined)
+    save_length_decline = [store_length_decline]
+
+    store_length_cssform = len(get_css_form)
+    save_length_cssform = [store_length_cssform]
+
+
+    context = {
+        'get_length_pending': save_length_pending,
+        'get_length_approved': save_length_approved,
+        'get_length_declined': save_length_decline,
+        'get_length_cssform': save_length_cssform,
+        'dept_val': get_appointment_history, 
+        'css_form_data': get_css_form
+    }
+    return render(request, "appointments.html", context)
 
 def user(request):
     return render(request, "user.html")

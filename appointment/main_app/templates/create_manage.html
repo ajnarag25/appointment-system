@@ -206,8 +206,86 @@
                           <td>{{f.last_login}}</td>
                           <td>{{f.date_joined}}</td>
                           <td>
-                            <button class="btn btn-success"><i class='bx bxs-edit' ></i></button>
-                            <button class="btn btn-danger"><i class='bx bxs-trash' ></i></button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#edit{{f.id}}"><i class='bx bxs-edit' ></i></button>
+                             <!-- Modal -->
+                            <div class="modal fade" id="edit{{f.id}}" tabindex="-1" role="dialog" aria-labelledby="edit{{f.id}}" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Credentials for User : {{f.first_name}} {{f.last_name}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form method="POST">
+                                      {% csrf_token %}
+                                      <br>
+                                      <div class="form-outline mb-4">
+                                          <input type="text" class="form-control" name="username" value={{f.username}} required/>
+                                        </div>
+                                      <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" name="first_name" value={{f.first_name}} required/>
+                                      </div>
+                                      <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" name="last_name" value={{f.last_name}} required/>
+                                      </div>
+                                      <div class="form-outline mb-4">
+                                          <input type="text" class="form-control" name="email" value={{f.email}} required/>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                          <select name="department" class="form-control" id="" required>
+                                            <option value="{{f.department}}" selected>{{f.department}}</option>
+                                            <option value="OAA">Office of Academic Affair (OAA)</option>
+                                            <option value="DIT">Department of Information Technology (DIT)</option>
+                                            <option value="DLA">Department of Liberal Arts (DLA)</option>
+                                            <option value="OCL">Office of Campus Library (OCL)</option>
+                                            <option value="ORE">Office of Research and Extension (ORE)</option>
+                                            <option value="DMS">Department of Mathematics and Science (DMS)</option>
+                                            <option value="DOE">Department of Engineering (DOE)</option>
+                                            <option value="OSA">Office of Student Affairs (OSA)</option>
+                                            <option value="UITC">University Information Technology Center (UITC)</option>
+                                            <option value="DPE">Department of Physical Education (DPE)</option>
+                                            <option value="SD">Security Department (SD)</option>
+                                        </select>
+                                        </div>
+                                      <br>
+                                  </div>
+                                    <div class="modal-footer">
+                                      <input type="hidden" name="id_update_admin" value="{{f.id}}">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-success">Update</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#delete{{f.id}}"><i class='bx bxs-trash' ></i></button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="delete{{f.id}}" tabindex="-1" role="dialog" aria-labelledby="delete{f.id}}" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Removing Admin : {{f.first_name}} {{f.last_name}}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                      <form method="POST">
+                                        {% csrf_token %}
+                                        <p><strong><i class='bx bxs-error bx-flashing' style="color: red;"></i> Warning this Action is Irreversible!</strong></p>
+                                        <h4>Are you sure to remove this user admin?</h4>
+                                    </div>
+                                      <div class="modal-footer">
+                                        <input type="hidden" name="id_delete_admin" value="{{f.id}}">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
                           </td>
                         </tr>
                       {% endfor %}
@@ -241,8 +319,64 @@
                         <td>{{s.last_login}}</td>
                         <td>{{s.date_joined}}</td>
                         <td>
-                          <button class="btn btn-success"><i class='bx bxs-edit' ></i></button>
-                          <button class="btn btn-danger"><i class='bx bxs-trash' ></i></button>
+                          <button class="btn btn-success" data-toggle="modal" data-target="#edit{{s.id}}"><i class='bx bxs-edit' ></i></button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="edit{{s.id}}" tabindex="-1" role="dialog" aria-labelledby="edit{{s.id}}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Edit Credentials for User : {{s.username}}</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form method="POST">
+                                    {% csrf_token %}
+                                    <br>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" name="username" value={{s.username}} required/>
+                                      </div>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" name="email" value={{s.email}} required/>
+                                      </div>
+                                    <br>
+                                </div>
+                                  <div class="modal-footer">
+                                    <input type="hidden" name="id_update_student" value="{{s.id}}">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <button class="btn btn-danger" data-toggle="modal" data-target="#delete{{s.id}}"><i class='bx bxs-trash' ></i></button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete{{s.id}}" tabindex="-1" role="dialog" aria-labelledby="delete{s.id}}" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Removing Student : {{s.username}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                    <form method="POST">
+                                      {% csrf_token %}
+                                      <p><strong><i class='bx bxs-error bx-flashing' style="color: red;"></i> Warning this Action is Irreversible!</strong></p>
+                                      <h4>Are you sure to remove this user student?</h4>
+                                  </div>
+                                    <div class="modal-footer">
+                                      <input type="hidden" name="id_delete_student" value="{{s.id}}">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-danger">Remove</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
                         </td>
                       </tr>
                     {% endfor %}

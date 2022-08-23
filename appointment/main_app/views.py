@@ -24,6 +24,7 @@ class PasswordsChangeView(PasswordChangeView):
 def index(request):
     return render(request, "index.html")
 
+#LOGIN
 def login_admin(request):
     if request.user.is_authenticated:
         return redirect ('admin_site')
@@ -81,6 +82,7 @@ def login_student(request):
     }
     return render(request, "login_student.html", context)
 
+#SIGNUP
 def signup_student(request):
     signup = student_reg()
     if request.method == 'POST':
@@ -98,7 +100,7 @@ def signup_student(request):
    
     return render(request, "signup_student.html", context)
 
-
+#APPOINTMENTS
 def book_app(request):
     get_data = depts.objects.filter(is_staff = 0).values()
     get_appointment = appointmentGuest(request.POST or None)
@@ -296,11 +298,45 @@ def dashboard(request):
 def create_manage(request):
     get_faculty = depts.objects.filter(is_staff = 0).values()
     get_student = depts.objects.filter(is_staff = 1).values()
+    get_app = appointmentForm.objects.all()
+
+    get_id_update_admin = request.POST.get('id_update_admin')
+    if get_id_update_admin != None:
+        get_username = request.POST.get('username')
+        get_first_name = request.POST.get('first_name')
+        get_last_name = request.POST.get('last_name')
+        get_email = request.POST.get('email')
+        get_department = request.POST.get('department')
+        depts.objects.filter(id=get_id_update_admin).update(username=get_username)
+        depts.objects.filter(id=get_id_update_admin).update(first_name=get_first_name)
+        depts.objects.filter(id=get_id_update_admin).update(last_name=get_last_name)
+        depts.objects.filter(id=get_id_update_admin).update(email=get_email)
+        depts.objects.filter(id=get_id_update_admin).update(department=get_department)
+        messages.info(request,'Successfully Updated')
+
+    get_id_delete_admin = request.POST.get('id_delete_admin')
+    if get_id_delete_admin != None:
+        delete_admin = depts.objects.filter(id=get_id_delete_admin)
+        delete_admin.delete()
+        messages.info(request,'Successfully Deleted!')
+
+    get_id_update_student = request.POST.get('id_update_student')
+    if get_id_update_student != None:
+        get_username = request.POST.get('username')
+        get_email = request.POST.get('email')
+        depts.objects.filter(id=get_id_update_student).update(username=get_username)
+        depts.objects.filter(id=get_id_update_student).update(email=get_email)
+        messages.info(request,'Successfully Updated')
+
+    get_id_delete_student = request.POST.get('id_delete_student')
+    if get_id_delete_student != None:
+        delete_student = depts.objects.filter(id=get_id_delete_student)
+        delete_student.delete()
+        messages.info(request,'Successfully Deleted!')
 
     signup_admin = admin_reg()
     if request.method == 'POST':
         signup_admin = admin_reg(request.POST)
-        print(signup_admin)
         if signup_admin.is_valid():
             signup_admin.save()
             messages.info(request,'Successfully Created Admin Account!')
@@ -310,6 +346,7 @@ def create_manage(request):
         'signup_admin': signup_admin,
         'faculty': get_faculty,
         'student': get_student,
+        'get_date': get_app
     }
     return render(request, "create_manage.html", context)
 

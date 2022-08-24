@@ -16,6 +16,7 @@ class depts(AbstractUser):
         ('UITC','University Information Technology Center'),
         ('DPE','Department of Physical Education'),
         ('SD','Security Department'),
+        ('RE','Research & Extension'),
     ]
     
     department = models.CharField(max_length=200, choices = admintype, verbose_name = 'department')

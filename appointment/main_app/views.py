@@ -46,9 +46,16 @@ def login_admin(request):
                     return redirect('login_admin')
                 else:
                     login(request, user)
-                    request.session['username'] = userrr
-                    request.session['department'] = departs
-                    return redirect('admin_site')
+                    if dept_names == 'SD':
+                        request.session['department'] = departs
+                        return redirect('admin_site_sg')
+                    elif dept_names == 'RE':
+                        request.session['department'] = departs
+                        return redirect('admin_site_re')
+                    else:
+                        request.session['username'] = userrr
+                        request.session['department'] = departs
+                        return redirect('admin_site')
 
             else:
                 messages.info(request,'Username/Password is Incorrect')
@@ -258,8 +265,6 @@ def admin_site(request):
         set_val = 'University Information Technology Center '
     elif get_dept == "DPE":
         set_val = 'Department of Physical Education'
-    elif get_dept == "SD":
-        set_val = 'Security Department'
 
     context = {
         'dept_name' : set_val,
@@ -271,6 +276,40 @@ def admin_site(request):
 
 
     return render(request, "admin_site.html", context)
+
+@login_required(login_url='login_admin')
+def admin_site_sg(request):
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
+    get_id_delete = request.POST.get('id_delete')
+    print(get_id_delete)
+    if get_id_delete != None:
+        delete_app = appointmentForm.objects.filter(id=get_id_delete)
+        delete_app.delete()
+        messages.info(request,'Successfully Deleted!')
+        
+    get_dept = request.session['department']
+    if get_dept == 'SD':
+        set_val = 'Security Department'
+
+    context={
+        'dept_name': set_val,
+        'dept_val_1': get_appointment_approved
+    }
+    return render(request, "admin_site_sg.html", context)
+
+
+@login_required(login_url='login_admin')
+def admin_site_re(request):
+    get_cssform = cssform.objects.all()
+    get_dept = request.session['department']
+    if get_dept == 'RE':
+        set_val = 'Research & Extension'
+
+    context={
+        'dept_name': set_val,
+        'cssform': get_cssform
+    }
+    return render(request, "admin_site_re.html", context)
 
 #SUPERUSER
 def dashboard(request):

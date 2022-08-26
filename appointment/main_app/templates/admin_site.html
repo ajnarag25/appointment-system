@@ -207,6 +207,7 @@
                 <th>Year Graduate</th>
                 <th>Person Needed</th>
                 <th>Purpose</th>
+                <th>Notes</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -222,6 +223,7 @@
                 <td>{{d.yrgraduate}} year/s</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
+                <td>{{d.notes}}</td>
                 <td>
                   <div class="btn-group">
                     <form method="POST">
@@ -246,6 +248,33 @@
                               <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name">
                               <input type="hidden" value="{{d.email}}" name="student_email">
                               <button type="submit" class="btn btn-primary btn-sm" >Yes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form method="POST">
+                      {% csrf_token %}
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
+                      <div class="modal fade" id="compose{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="compose{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Compose Message for : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h5 for="">Compose Message:</h5>
+                              <textarea class="form-control" id="" name="compose_msg_2" cols="70" rows="5" required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_compose_2">
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_2">
+                              <input type="hidden" value="{{d.email}}" name="student_email_2">
+                              <button type="submit" class="btn btn-success btn-sm" >Send</button>
                             </div>
                           </div>
                         </div>
@@ -324,7 +353,7 @@
                   <div class="btn-group">
                     <form method="POST">
                       {% csrf_token %}
-                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
                       <div class="modal fade" id="compose{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="compose{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
@@ -341,6 +370,8 @@
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <input type="hidden" value="{{d.id}}" name="id_compose">
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_3">
+                              <input type="hidden" value="{{d.email}}" name="student_email_3">
                               <button type="submit" class="btn btn-success btn-sm" >Send</button>
                             </div>
                           </div>
@@ -349,7 +380,33 @@
                     </form>
                     <form method="POST">
                       {% csrf_token %}
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}"><span><i class="fa fa-close"></i></span></button>
+                      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ d.id }}"><span><i class="fa fa-check"></i></span></button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="accept{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="accept{{ d.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                              <h3 class="modal-title">Re-Approved Appointment</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h4>Approving the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to approve the appointment of this student?</h4>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input type="hidden" value="{{d.id}}" name="id_reapproved">
+                              <button type="submit" class="btn btn-success btn-sm" >Approve</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form method="POST">
+                      {% csrf_token %}
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}"><span><i class="fa fa-trash"></i></span></button>
                       <div class="modal fade" id="delete{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="delete{{ d.id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">

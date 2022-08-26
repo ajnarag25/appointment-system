@@ -37,36 +37,38 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <table class="table table-hover">
-                                        <thead>
-                                          <tr>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Purpose</th>
-                                            <th>Status</th>
-                                            <th>Note</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for d in get_user_data %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ">
+                                            <thead>
                                             <tr>
-                                                <td>{{d.pdate}}</td>
-                                                <td>{{d.ptime}}</td>
-                                                <td>{{d.purpose}}</td>
-                                                <td>
-                                                    {% if d.status == 'PENDING' %}
-                                                    <span style="color: rgb(181, 189, 76);">Pending</span></td>
-                                                    {% elif d.status == 'APPROVED' %}
-                                                    <span style="color: rgb(24, 161, 31);">Approved</span></td>
-                                                    {% elif d.status == 'DECLINED' %}
-                                                    <span style="color: rgb(184, 28, 28);">Declined</span></td>
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{d.notes}}</td>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Purpose</th>
+                                                <th>Status</th>
+                                                <th>Note</th>
                                             </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                      </table>
+                                            </thead>
+                                            <tbody>
+                                                {% for d in get_user_data %}
+                                                <tr>
+                                                    <td>{{d.pdate}}</td>
+                                                    <td>{{d.ptime}}</td>
+                                                    <td>{{d.purpose}}</td>
+                                                    <td>
+                                                        {% if d.status == 'PENDING' %}
+                                                        <span style="color: rgb(181, 189, 76);">Pending</span></td>
+                                                        {% elif d.status == 'APPROVED' %}
+                                                        <span style="color: rgb(24, 161, 31);">Approved</span></td>
+                                                        {% elif d.status == 'DECLINED' %}
+                                                        <span style="color: rgb(184, 28, 28);">Declined</span></td>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{d.notes}}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -127,12 +129,23 @@
                         <label for="inputCourse" class="form-label">Select Course</label>
                         <select id="inputCourse" class="form-select" name="course" required>
                         <option selected>Courses.</option>
-                        <option>BSME</option>
-                        <option>BSCE</option>
-                        <option>BSEE</option>
-                        <option>BSIE</option>
-                        <option>BET-COET</option>
-                        <option>BET-CET</option>
+                        <option value="BSCE">BSCE - Bachelor of Science in Civil Engineering</option>
+                        <option value="BSEE">BSEE - Bachelor of Science in Electrical Engineering</option>
+                        <option value="BSME">BSME - Bachelor of Science in Mechanical Engineering</option>
+                        <option value="BGT-AT">BGT-AT - Architecture Technology </option>
+                        <option value="BET-ET">BET-ET - Electrical Technology</option>
+                        <option value="BET-ESET">BET-ESET - Industrial Automation Technology</option>
+                        <option value="BET-COET">BET-COET - Computer Engineering Technology</option>
+                        <option value="BET-CT-1">BET-CT - Contruction Technology</option>
+                        <option value="BET-CT-2">BET-CT - Civil Technology</option>
+                        <option value="BET-MT">BET-MT - Mechanical Technology</option>
+                        <option value="BET-AT">BET-AT - Automotive Technology</option>
+                        <option value="BET-PPT">BET-PPT - Power Plant Technology</option>
+                        <option value="BSIE-HE">BSIE-HE - Home Economics</option>
+                        <option value="BSIE-IA">BSIE-IA - Industrial Arts</option>
+                        <option value="BSIE-ICT">BSIE-ICT - Information and Communication Technology</option>
+                        <option value="BTTE-CP">BTTE-CP - Computer Programming</option>
+                        <option value="BTTE-E">BTTE-E - Electrical</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -150,17 +163,18 @@
                         <label for="inputDept" class="form-label">Department</label>
                         <select id="inputDept" class="form-select" name="dept" required>
                         <option selected>Select Department</option>
-                        <option>OAA</option>
-                        <option>DIT</option>
-                        <option>DLA</option>
-                        <option>OCL</option>
-                        <option>ORE</option>
-                        <option>DMS</option>
-                        <option>DOE</option>
-                        <option>OSA</option>
-                        <option>UITC</option>
-                        <option>DPE</option>
-                        <option>SD</option>
+                        <option value="OAA">Office of Academic Affair (OAA)</option>
+                        <option value="DIT">Department of Information Technology (DIT)</option>
+                        <option value="DLA">Department of Liberal Arts (DLA)</option>
+                        <option value="OCL">Office of Campus Library (OCL)</option>
+                        <option value="ORE">Office of Research and Extension (ORE)</option>
+                        <option value="DMS">Department of Mathematics and Science (DMS)</option>
+                        <option value="DOE">Department of Engineering (DOE)</option>
+                        <option value="OSA">Office of Student Affairs (OSA)</option>
+                        <option value="UITC">University Information Technology Center (UITC)</option>
+                        <option value="DPE">Department of Physical Education (DPE)</option>
+                        <option value="SD">Security Department (SD)</option>
+                        <option value="RE">Research & Extension (RE)</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -168,8 +182,32 @@
                         <select id="inputContactP" class="form-select" name="contactperson" required>
                         <option selected>Select Contact Person</option>
                         {% for a in names %}
-                        <option>{{a.first_name}} {{a.last_name}}</option>
-                        {% endfor %}
+                        {% if a.department == 'OAA' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
+                        {% elif a.department == 'DIT' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
+                        {% elif a.department == 'DLA' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
+                        {% elif a.department == 'OCL' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
+                        {% elif a.department == 'ORE' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Office of Research and Extension ({{a.department}})</option>
+                        {% elif a.department == 'DMS' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
+                        {% elif a.department == 'DOE' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
+                        {% elif a.department == 'OSA' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
+                        {% elif a.department == 'UITC' %}
+                        <option>{{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
+                        {% elif a.department == 'DPE' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
+                        {% elif a.department == 'SD' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
+                        {% elif a.department == 'RE' %}
+                        <option>{{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
+                        {% endif %}
+                    {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -290,7 +328,6 @@
                 document.getElementById('ptime').innerHTML = "Preferred Time:" + " " + i13;
                 document.getElementById('purpose').innerHTML = "Purpose:" + " " + i14;
             })
-
         })
     </script>
 

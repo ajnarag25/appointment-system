@@ -25,6 +25,30 @@ def index(request):
     return render(request, "index.html")
 
 #LOGIN
+def login_superuser(request):
+    if request.user.is_authenticated:
+        return redirect ('dashboard')
+    else:
+        if request.method == 'POST':
+            print('geh lods')
+            userrr = request.POST.get('username')
+            passw = request.POST.get('password') 
+            print(userrr)
+            print(passw)
+            user = authenticate(request, username=userrr,password=passw)
+            if user is not None:
+                get_superuser = depts.objects.get(username=userrr)
+                if get_superuser.is_superuser == False:
+                    messages.info(request,'Something went wrong')
+                    return redirect('login_superuser')
+                else:
+                    login(request, user)
+                    return redirect('dashboard')
+            else:
+                messages.info(request,'Username/Password is Incorrect')
+
+    return render(request, "login_superuser.html")
+
 def login_admin(request):
     if request.user.is_authenticated:
         return redirect ('admin_site')
@@ -189,6 +213,10 @@ def css_form(request):
 
 
 #LOGOUT 
+def logoutSuperuser(request):
+    logout(request)
+    return redirect('login_superuser')
+
 def logoutAdmin(request):
     logout(request)
     return redirect('login_admin')
@@ -203,10 +231,13 @@ def logoutStudent(request):
 def admin_site(request):
     get_dept = request.session['department']
     get_compose_msg = request.POST.get('compose_msg')
+    get_compose_msg_2 = request.POST.get('compose_msg_2')
     get_id_approved = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
     get_id_delete = request.POST.get('id_delete')
     get_id_compose = request.POST.get('id_compose')
+    get_id_compose_2 = request.POST.get('id_compose_2')
+    get_id_reapproved = request.POST.get('id_reapproved')
 
     get_name = request.POST.get('student_name')
     if get_name != None:
@@ -221,9 +252,35 @@ def admin_site(request):
             [get_email],
         )
         messages.info(request,'Css Form has been sent')
-        
+
     if get_compose_msg != None:
+        get_name = request.POST.get('student_name_3')
         appointmentForm.objects.filter(id = get_id_compose).update(notes=get_compose_msg)
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('student_email_3')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = get_compose_msg + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
+        messages.info(request,'Message has been sent')
+    
+    if get_compose_msg_2 != None:
+        get_name = request.POST.get('student_name_2')
+        appointmentForm.objects.filter(id = get_id_compose_2).update(notes=get_compose_msg_2)
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('student_email_2')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = get_compose_msg_2 + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
         messages.info(request,'Message has been sent')
 
     if get_id_delete != None:
@@ -239,6 +296,9 @@ def admin_site(request):
     if checkapp2 == 1:
         messages.info(request,'Successfully Declined')
 
+    checkapp3 = appointmentForm.objects.filter(id = get_id_reapproved).update(status='APPROVED')
+    if checkapp3 == 1:
+        messages.info(request,'Successfully Approved')
 
     get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
     get_appointment_approved = appointmentForm.objects.filter(dept = get_dept).filter(status='APPROVED').values()
@@ -312,6 +372,7 @@ def admin_site_re(request):
     return render(request, "admin_site_re.html", context)
 
 #SUPERUSER
+@login_required(login_url='login_superuser')
 def dashboard(request):
     get_faculty = depts.objects.filter(is_staff = 0).values()
     get_student = depts.objects.filter(is_staff = 1).values()
@@ -334,9 +395,10 @@ def dashboard(request):
     }
     return render(request, "dashboard.html", context)
 
+@login_required(login_url='login_superuser')
 def create_manage(request):
     get_faculty = depts.objects.filter(is_staff = 0).values()
-    get_student = depts.objects.filter(is_staff = 1).values()
+    get_student = depts.objects.filter(is_staff = 1).filter(is_superuser = 0).values()
     get_app = appointmentForm.objects.all()
 
     get_id_update_admin = request.POST.get('id_update_admin')
@@ -389,6 +451,7 @@ def create_manage(request):
     }
     return render(request, "create_manage.html", context)
 
+@login_required(login_url='login_superuser')
 def appointments(request):
     get_appointment_pending = appointmentForm.objects.filter(status='PENDING').values()
     get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
@@ -419,5 +482,23 @@ def appointments(request):
     }
     return render(request, "appointments.html", context)
 
+@login_required(login_url='login_superuser')
 def user(request):
-    return render(request, "user.html")
+    superuser = depts.objects.filter(is_superuser = True).values()
+    get_id_superuser = request.POST.get('id_superuser')
+
+    if get_id_superuser is not None:
+        get_username = request.POST.get('username')
+        get_first_name = request.POST.get('first_name')
+        get_last_name = request.POST.get('last_name')
+        get_email = request.POST.get('email')
+        depts.objects.filter(id=get_id_superuser).update(username=get_username)
+        depts.objects.filter(id=get_id_superuser).update(first_name=get_first_name)
+        depts.objects.filter(id=get_id_superuser).update(last_name=get_last_name)
+        depts.objects.filter(id=get_id_superuser).update(email=get_email)
+        messages.info(request,'Successfully Updated')
+
+    context = {
+        'get_superuser': superuser
+    }
+    return render(request, "user.html", context)

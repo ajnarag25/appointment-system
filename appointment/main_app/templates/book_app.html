@@ -62,26 +62,51 @@
                     <div class="col-md-6">
                         <label for="inputDept" class="form-label">Department</label>
                         <select id="inputDept" class="form-select" name="dept" required>
-                        <option selected>Select Department</option>
-                        <option>OAA</option>
-                        <option>DIT</option>
-                        <option>DLA</option>
-                        <option>OCL</option>
-                        <option>ORE</option>
-                        <option>DMS</option>
-                        <option>DOE</option>
-                        <option>OSA</option>
-                        <option>UITC</option>
-                        <option>DPE</option>
-                        <option>SD</option>
+                        <option selected disabled>Select Department</option>
+                        <option value="OAA">Office of Academic Affair (OAA)</option>
+                        <option value="DIT">Department of Information Technology (DIT)</option>
+                        <option value="DLA">Department of Liberal Arts (DLA)</option>
+                        <option value="OCL">Office of Campus Library (OCL)</option>
+                        <option value="ORE">Office of Research and Extension (ORE)</option>
+                        <option value="DMS">Department of Mathematics and Science (DMS)</option>
+                        <option value="DOE">Department of Engineering (DOE)</option>
+                        <option value="OSA">Office of Student Affairs (OSA)</option>
+                        <option value="UITC">University Information Technology Center (UITC)</option>
+                        <option value="DPE">Department of Physical Education (DPE)</option>
+                        <option value="SD">Security Department (SD)</option>
+                        <option value="RE">Research & Extension (RE)</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label for="inputContactP" class="form-label">Contact Person</label>
                         <select id="inputContactP" class="form-select" name="contactperson" required>
-                        <option selected>Select Contact Person</option>
+                        <option selected disabled>Select Contact Person</option>
                         {% for a in names %}
-                        <option>{{a.first_name}} {{a.last_name}}</option>
+                            {% if a.department == 'OAA' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
+                            {% elif a.department == 'DIT' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
+                            {% elif a.department == 'DLA' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
+                            {% elif a.department == 'OCL' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
+                            {% elif a.department == 'ORE' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Office of Research and Extension ({{a.department}})</option>
+                            {% elif a.department == 'DMS' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
+                            {% elif a.department == 'DOE' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
+                            {% elif a.department == 'OSA' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
+                            {% elif a.department == 'UITC' %}
+                            <option>{{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
+                            {% elif a.department == 'DPE' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
+                            {% elif a.department == 'SD' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
+                            {% elif a.department == 'RE' %}
+                            <option>{{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
+                            {% endif %}
                         {% endfor %}
                         </select>
                     </div>
@@ -194,6 +219,11 @@
                 document.getElementById('ptime').innerHTML = "Preferred Time:" + " " + i9;
                 document.getElementById('purpose').innerHTML = "Purpose:" + " " + i10;
             })
+            $('select').change(function() {
+                console.log($(this).val());
+                $("#set_dept").val($(this).val())
+                document.getElementById('setmoto').innerHTML = $(this).val();
+            });
         })
     </script>
 </body>

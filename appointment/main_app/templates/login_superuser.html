@@ -27,8 +27,8 @@
     </nav>
     
 
-    <div class="d-flex flex-row-reverse bd-highlight">
-        <a href="{% url 'login_superuser' %}" style="text-decoration: none; color:rgb(151, 8, 8);">Login as Superuser <i class='bx bx-right-arrow-alt'></i> </a>
+    <div class="d-flex flex-row bd-highlight mb-3">
+        <a href="{% url 'login_admin' %}" style="text-decoration: none; color:rgb(151, 8, 8);"><i class='bx bx-left-arrow-alt'></i> Login as Admin </a>
       </div>
     <div class="container marg-top d-flex justify-content-center" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">
         <div class="card card_custom-2">
@@ -36,25 +36,8 @@
             <br>
             <form method="POST">
                 {% csrf_token %}
-                <h3 class="text-center">Admin - Login</h3>
+                <h3 class="text-center">Superuser - Login</h3>
                 <br>
-                <div class="form-outline mb-4">
-                    <select name="department" class="form-select" id="" required>
-                        <option value="" selected disabled>Select Department</option>
-                        <option value="OAA">Office of Academic Affair (OAA)</option>
-                        <option value="DIT">Department of Information Technology (DIT)</option>
-                        <option value="DLA">Department of Liberal Arts (DLA)</option>
-                        <option value="OCL">Office of Campus Library (OCL)</option>
-                        <option value="ORE">Office of Research and Extension (ORE)</option>
-                        <option value="DMS">Department of Mathematics and Science (DMS)</option>
-                        <option value="DOE">Department of Engineering (DOE)</option>
-                        <option value="OSA">Office of Student Affairs (OSA)</option>
-                        <option value="UITC">University Information Technology Center (UITC)</option>
-                        <option value="DPE">Department of Physical Education (DPE)</option>
-                        <option value="SD">Security Department (SD)</option>
-                        <option value="RE">Research & Extension (RE)</option>
-                    </select>
-                </div>
                 <div class="form-outline mb-4">
                     <input type="text" id="" class="form-control" name="username" placeholder="Username" required/>
                   </div>
@@ -67,7 +50,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                    <a class="btn btn-secondary" href="{% url 'Home' %}">Back</a>
+                    <a class="btn btn-secondary" href="{% url 'login_admin' %}">Back</a>
                     <button type="submit" class="btn btn-danger">Sign in</button>
                 </div>
               </form>

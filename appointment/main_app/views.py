@@ -1,3 +1,4 @@
+from ast import Delete
 from multiprocessing import context
 from tkinter.messagebox import NO
 from tkinter.tix import STATUS
@@ -15,6 +16,13 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
+
+from datetime import date
+from docx import Document
+from docx2pdf import convert
+import pythoncom
+import os
+import shutil
 
 # Create your views here.
 class PasswordsChangeView(PasswordChangeView):
@@ -502,3 +510,46 @@ def user(request):
         'get_superuser': superuser
     }
     return render(request, "user.html", context)
+
+
+#GENERATE PDF
+def generatePDF(request):
+    pythoncom.CoInitialize()
+    directory = os.getcwd()
+    print('DIRECTORY: '+directory)
+    today = date.today()
+    css_data = cssform.objects.all()
+    doc = Document()
+
+    pd1 = PDFS.objects.all()
+    FILENO = len(pd1) + 1
+
+    doc.add_heading('SAVED CSS FORM: '+str(today), 0)
+    doc.add_heading('SAVED FILE NO: '+str(FILENO), 1)
+    doc.add_paragraph(" ")
+    for i in range(len(css_data)):
+        doc.add_paragraph("FULL NAME: "+css_data[i].name)
+        doc.add_paragraph("CONTACT: "+css_data[i].contact)
+        doc.add_paragraph("EMAIL: "+css_data[i].email)
+        doc.add_paragraph("PURPOSE: "+css_data[i].transaction)
+        doc.add_paragraph("FEEDBACK: "+css_data[i].feedback)
+        doc.add_paragraph("COMMENT: "+css_data[i].comment)
+        doc.add_paragraph("- - - - - - - - - - - - - - - - - -")
+
+    
+    
+    doc.save('SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.docx')
+    convert('SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.docx')
+
+    s = PDFS(PDFSave = 'SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.pdf')
+    s.save()
+
+    shutil.move('SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.pdf', 'pdf_files')
+    os.remove('SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.docx')
+
+    #os.startfile('SAVED-'+str(today)+'.pdf')
+    os.startfile(directory+'\pdf_files'+'\SAVED-FILE-'+str(FILENO)+'-'+str(today)+'.pdf')
+
+    messages.info(request,'Successfully Generated a PDF file')
+
+    return redirect('admin_site_re')

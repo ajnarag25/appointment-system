@@ -55,3 +55,7 @@ class cssform(models.Model):
     overall = models.IntegerField()
     feedback = models.CharField(max_length=100)
     comment = models.CharField(max_length=100)
+
+
+class PDFS(models.Model):
+    PDFSave = models.CharField(max_length=200, null=True)

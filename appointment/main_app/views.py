@@ -321,8 +321,8 @@ def admin_site(request):
         set_val = 'Department of Liberal Arts'
     elif get_dept == "OCL":
         set_val = 'Office of Campus Library'
-    elif get_dept == "ORE":
-        set_val = 'Office of Research and Extension'
+    elif get_dept == "DED":
+        set_val = 'Department of Education'
     elif get_dept == "DMS":
         set_val = 'Department of Mathematics and Science'
     elif get_dept == "DOE":
@@ -382,8 +382,8 @@ def admin_site_re(request):
 #SUPERUSER
 @login_required(login_url='login_superuser')
 def dashboard(request):
-    get_faculty = depts.objects.filter(is_staff = 0).values()
-    get_student = depts.objects.filter(is_staff = 1).values()
+    get_faculty = depts.objects.filter(is_staff = 0, is_superuser = 0).values()
+    get_student = depts.objects.filter(is_staff = 1, is_superuser = 0).values()
     get_appointments = appointmentForm.objects.all()
 
     store_length_1 = len(get_faculty) 

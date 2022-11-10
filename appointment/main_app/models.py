@@ -9,7 +9,7 @@ class depts(AbstractUser):
         ('DIT','Department of Information Technology'),
         ('DLA','Department of Liberal Arts'),
         ('OCL','Office of Campus Library'),
-        ('ORE','Office of Research and Extension'),
+        ('DED','Department of Education'),
         ('DMS','Department of Mathematics and Science'),
         ('DOE','Department of Engineering'),
         ('OSA','Office of Student Affairs'),

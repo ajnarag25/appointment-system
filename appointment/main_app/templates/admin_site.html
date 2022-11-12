@@ -123,8 +123,8 @@
                 <td>{{d.user}}</td>
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
-                <td>{{d.yrlevel}} year/s</td>
-                <td>{{d.yrgraduate}} year/s</td>
+                <td>{{d.yrlevel}}</td>
+                <td>{{d.yrgraduate}}</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>
@@ -137,19 +137,22 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
-                              <h3 class="modal-title">Accept Appointment</h3>
+                              <h3 class="modal-title">Approve Appointment</h3>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <h4>Accepting the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
-                              <h4>Do you want to accept the appointment of this student?</h4>
+                              <h4>Approve the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to approve the appointment of this student?</h4>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <input type="hidden" value="{{d.id}}" name="id_accept">
-                              <button type="submit" class="btn btn-success btn-sm" >Accept</button>
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_accept">
+                              <input type="hidden" value="{{d.email}}" name="accept_email">
+                              <input type="hidden" value="{{dept_email}}" name="department_email">
+                              <button type="submit" class="btn btn-success btn-sm" >Approve</button>
                             </div>
                           </div>
                         </div>
@@ -171,11 +174,15 @@
                             <div class="modal-body">
                               <h4>Declining the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
                               <h4>Do you want to decline the appointment of this student?</h4>
+                              <h5 for="">Reason for Declining the Appointment:</h5>
+                              <textarea class="form-control" id="" name="decline_msg" cols="70" rows="5" required></textarea>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                               <input type="hidden" value="{{d.id}}" name="id_decline">
-                              <button type="submit" class="btn btn-danger btn-sm" >Decline</button>
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_decline">
+                              <input type="hidden" value="{{d.email}}" name="decline_email">
+                              <button type="submit" class="btn btn-danger btn-sm" >Yes</button>
                             </div>
                           </div>
                         </div>
@@ -192,7 +199,7 @@
 
       <div class="box" id="approve">
         <div class="box-header">
-          <h3 class="box-title"><strong>Accepted Appointments</strong></h3>
+          <h3 class="box-title"><strong>Approved Appointments</strong></h3>
         </div>
         <div class="box-body">
           <table id="example2" class="table table-bordered table-hover table-sm" style="text-align: center;" >
@@ -219,8 +226,8 @@
                 <td>{{d.user}}</td>
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
-                <td>{{d.yrlevel}} year/s</td>
-                <td>{{d.yrgraduate}} year/s</td>
+                <td>{{d.yrlevel}}</td>
+                <td>{{d.yrgraduate}}</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>{{d.notes}}</td>
@@ -253,33 +260,7 @@
                         </div>
                       </div>
                     </form>
-                    <form method="POST">
-                      {% csrf_token %}
-                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
-                      <div class="modal fade" id="compose{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="compose{{ d.id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
-                              <h3 class="modal-title">Compose Message for : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <h5 for="">Compose Message:</h5>
-                              <textarea class="form-control" id="" name="compose_msg_2" cols="70" rows="5" required></textarea>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <input type="hidden" value="{{d.id}}" name="id_compose_2">
-                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_2">
-                              <input type="hidden" value="{{d.email}}" name="student_email_2">
-                              <button type="submit" class="btn btn-success btn-sm" >Send</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
+
                     <form method="POST">
                       {% csrf_token %}
                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ d.id }}"><span><i class="fa fa-close"></i></span></button>
@@ -287,19 +268,23 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
-                              <h3 class="modal-title">Cancel Appointment</h3>
+                              <h3 class="modal-title">Decline Appointment</h3>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <h4>Canceling the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
-                              <h4>Do you want to cancel the appointment of this student?</h4>
+                              <h4>Declining the appointment of : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h4>
+                              <h4>Do you want to decline the appointment of this student?</h4>
+                              <h5 for="">Reason for Declining the Appointment:</h5>
+                              <textarea class="form-control" id="" name="decline_msg" cols="70" rows="5" required></textarea>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                               <input type="hidden" value="{{d.id}}" name="id_decline">
-                              <button type="submit" class="btn btn-danger btn-sm" >Cancel</button>
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_decline">
+                              <input type="hidden" value="{{d.email}}" name="decline_email">
+                              <button type="submit" class="btn btn-danger btn-sm" >Yes</button>
                             </div>
                           </div>
                         </div>
@@ -344,40 +329,14 @@
                 <td>{{d.user}}</td>
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
-                <td>{{d.yrlevel}} year/s</td>
-                <td>{{d.yrgraduate}} year/s</td>
+                <td>{{d.yrlevel}}</td>
+                <td>{{d.yrgraduate}}</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>{{d.notes}}</td>
                 <td>
                   <div class="btn-group">
-                    <form method="POST">
-                      {% csrf_token %}
-                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#compose{{ d.id }}"><span><i class="fa fa-envelope"></i></span></button>
-                      <div class="modal fade" id="compose{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="compose{{ d.id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
-                              <h3 class="modal-title">Compose Message for : {{d.firstname}} {{d.middlename}} {{d.lastname}}</h3>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <h5 for="">Compose Message:</h5>
-                              <textarea class="form-control" id="" name="compose_msg" cols="70" rows="5" required></textarea>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <input type="hidden" value="{{d.id}}" name="id_compose">
-                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_3">
-                              <input type="hidden" value="{{d.email}}" name="student_email_3">
-                              <button type="submit" class="btn btn-success btn-sm" >Send</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
+   
                     <form method="POST">
                       {% csrf_token %}
                       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ d.id }}"><span><i class="fa fa-check"></i></span></button>
@@ -398,6 +357,8 @@
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <input type="hidden" value="{{d.id}}" name="id_reapproved">
+                              <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_reapprove">
+                              <input type="hidden" value="{{d.email}}" name="reapprove_email">
                               <button type="submit" class="btn btn-success btn-sm" >Approve</button>
                             </div>
                           </div>
@@ -422,9 +383,9 @@
                               <p>This action is irreversible!</p>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                               <input type="hidden" value="{{d.id}}" name="id_delete">
-                              <button type="submit" class="btn btn-danger btn-sm" >Delete</button>
+                              <button type="submit" class="btn btn-danger btn-sm" >Yes</button>
                             </div>
                           </div>
                         </div>
@@ -468,8 +429,8 @@
                 <td>{{d.user}}</td>
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
-                <td>{{d.yrlevel}} year/s</td>
-                <td>{{d.yrgraduate}} year/s</td>
+                <td>{{d.yrlevel}}</td>
+                <td>{{d.yrgraduate}}</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>

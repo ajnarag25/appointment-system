@@ -68,6 +68,7 @@ def login_admin(request):
             user = authenticate(request, username=userrr,password=passw)
             if user is not None:
                 get_dept = depts.objects.get(username=userrr)
+                emails = get_dept.email
                 departs = get_dept.department
                 print(get_dept)
                 if get_dept.department == "":
@@ -85,6 +86,7 @@ def login_admin(request):
                         request.session['department'] = departs
                         return redirect('admin_site_re')
                     else:
+                        request.session['email'] = emails
                         request.session['username'] = userrr
                         request.session['department'] = departs
                         return redirect('admin_site')
@@ -238,13 +240,10 @@ def logoutStudent(request):
 @login_required(login_url='login_admin')
 def admin_site(request):
     get_dept = request.session['department']
-    get_compose_msg = request.POST.get('compose_msg')
-    get_compose_msg_2 = request.POST.get('compose_msg_2')
-    get_id_approved = request.POST.get('id_accept')
+    get_email_dept = request.session['email']
+    get_id_accept = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
     get_id_delete = request.POST.get('id_delete')
-    get_id_compose = request.POST.get('id_compose')
-    get_id_compose_2 = request.POST.get('id_compose_2')
     get_id_reapproved = request.POST.get('id_reapproved')
 
     get_name = request.POST.get('student_name')
@@ -261,51 +260,61 @@ def admin_site(request):
         )
         messages.info(request,'Css Form has been sent')
 
-    if get_compose_msg != None:
-        get_name = request.POST.get('student_name_3')
-        appointmentForm.objects.filter(id = get_id_compose).update(notes=get_compose_msg)
-        composed_name_header = 'Good day,' + ' ' + get_name
-        get_email = request.POST.get('student_email_3')
-        hostemail = 'tupcappointment2022@gmail.com'
-        msg = get_compose_msg + '\n \n' + '- TUPC_APPOINTMENT_2022'
-        send_mail(
-            composed_name_header,
-            msg,
-            hostemail,
-            [get_email],
-        )
-        messages.info(request,'Message has been sent')
     
-    if get_compose_msg_2 != None:
-        get_name = request.POST.get('student_name_2')
-        appointmentForm.objects.filter(id = get_id_compose_2).update(notes=get_compose_msg_2)
-        composed_name_header = 'Good day,' + ' ' + get_name
-        get_email = request.POST.get('student_email_2')
-        hostemail = 'tupcappointment2022@gmail.com'
-        msg = get_compose_msg_2 + '\n \n' + '- TUPC_APPOINTMENT_2022'
-        send_mail(
-            composed_name_header,
-            msg,
-            hostemail,
-            [get_email],
-        )
-        messages.info(request,'Message has been sent')
-
     if get_id_delete != None:
         delete_app = appointmentForm.objects.filter(id=get_id_delete)
         delete_app.delete()
         messages.info(request,'Successfully Deleted!')
 
-    checkapp1 = appointmentForm.objects.filter(id = get_id_approved).update(status='APPROVED')
+    checkapp1 = appointmentForm.objects.filter(id = get_id_accept).update(status='APPROVED')
     if checkapp1 == 1:
+        get_name = request.POST.get('student_name_accept')
+        get_email_department = request.POST.get('department_email')
+        appointmentForm.objects.filter(id = get_id_accept).update(notes='Your Appointment Successfully Approved')
+        appointmentForm.objects.filter(id = get_id_accept).update(contactperson_email=get_email_department)
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('accept_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = 'Your Appointment Successfully Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
         messages.info(request,'Successfully Approved')
 
     checkapp2 = appointmentForm.objects.filter(id = get_id_declined).update(status='DECLINED')
     if checkapp2 == 1:
+        decline_compose = request.POST.get('decline_msg')
+        get_name = request.POST.get('student_name_decline')
+        appointmentForm.objects.filter(id = get_id_declined).update(notes=decline_compose)
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('decline_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = decline_compose + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
         messages.info(request,'Successfully Declined')
 
     checkapp3 = appointmentForm.objects.filter(id = get_id_reapproved).update(status='APPROVED')
     if checkapp3 == 1:
+        get_name = request.POST.get('student_name_reapprove')
+        appointmentForm.objects.filter(id = get_id_reapproved).update(notes='Your Appointment Successfully Approved')
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('reapprove_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = 'Your Appointment Successfully Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
         messages.info(request,'Successfully Approved')
 
     get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
@@ -315,27 +324,38 @@ def admin_site(request):
 
     if get_dept == "OAA":
         set_val = 'Office of Academic Affair'
+        set_email = get_email_dept
     elif get_dept == "DIT":
         set_val = 'Department of Information Technology'
+        set_email = get_email_dept
     elif get_dept == "DLA":
         set_val = 'Department of Liberal Arts'
+        set_email = get_email_dept
     elif get_dept == "OCL":
         set_val = 'Office of Campus Library'
+        set_email = get_email_dept
     elif get_dept == "DED":
         set_val = 'Department of Education'
+        set_email = get_email_dept
     elif get_dept == "DMS":
         set_val = 'Department of Mathematics and Science'
+        set_email = get_email_dept
     elif get_dept == "DOE":
         set_val = 'Department of Engineering'
+        set_email = get_email_dept
     elif get_dept == "OSA":
         set_val = 'Office of Student Affairs'
+        set_email = get_email_dept
     elif get_dept == "UITC":
         set_val = 'University Information Technology Center '
+        set_email = get_email_dept
     elif get_dept == "DPE":
         set_val = 'Department of Physical Education'
+        set_email = get_email_dept
 
     context = {
         'dept_name' : set_val,
+        'dept_email': set_email,
         'dept_val_1': get_appointment_pending,
         'dept_val_2': get_appointment_approved, 
         'dept_val_3': get_appointment_declined, 
@@ -349,12 +369,29 @@ def admin_site(request):
 def admin_site_sg(request):
     get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
     get_id_delete = request.POST.get('id_delete')
+    get_email_check = request.POST.get('notify_email')
     print(get_id_delete)
+
     if get_id_delete != None:
         delete_app = appointmentForm.objects.filter(id=get_id_delete)
         delete_app.delete()
         messages.info(request,'Successfully Deleted!')
-        
+
+
+    if get_email_check != None:
+        get_message = request.POST.get('messages')
+        composed_name_header = 'Student Appointment'
+        get_email = request.POST.get('notify_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = get_message + '\n \n' + '- TUPC_APPOINTMENT_2022'  
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
+        messages.info(request,'Contact Perosonnel Successfully Notify')
+
     get_dept = request.session['department']
     if get_dept == 'SD':
         set_val = 'Security Department'

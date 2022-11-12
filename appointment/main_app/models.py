@@ -28,8 +28,8 @@ class appointmentForm(models.Model):
     email = models.EmailField(max_length=100)
     contact = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
-    yrlevel = models.IntegerField()
-    yrgraduate = models.IntegerField()
+    yrlevel = models.CharField(max_length=100)
+    yrgraduate = models.CharField(max_length=100)
     studentnum = models.CharField(max_length=100)
     dept = models.CharField(max_length=100)
     contactperson = models.CharField(max_length=100)
@@ -40,6 +40,7 @@ class appointmentForm(models.Model):
     status = models.CharField(max_length=100) 
     notes = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
+    contactperson_email = models.CharField(max_length=100)
 
 class cssform(models.Model):
     name = models.CharField(max_length=100)

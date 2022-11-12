@@ -121,12 +121,38 @@
                 <td>{{d.user}}</td>
                 <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                 <td>{{d.course}}</td>
-                <td>{{d.yrlevel}} year/s</td>
-                <td>{{d.yrgraduate}} year/s</td>
+                <td>{{d.yrlevel}}</td>
+                <td>{{d.yrgraduate}}</td>
                 <td>{{d.contactperson}}</td>
                 <td>{{d.purpose}}</td>
                 <td>
+                  <form method="POST">
+                    {% csrf_token %}
                   <div class="btn-group">
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#notify{{ d.id }}"><span><i class="fa fa-bell"></i></span></button>
+                    <div class="modal fade" id="notify{{ d.id }}" tabindex="-1" role="dialog" aria-labelledby="notify{{ d.id }}" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header" style="background-color: rgb(151, 8, 8); color: white;">
+                            <h3 class="modal-title">Notify The Contact Personnel</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <h4>Notify now the Contact Personnel?</h4>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <input type="hidden" value="{{d.id}}" name="id_notify">
+                            <input type="hidden" value="Hi Mr/Ms. {{d.contactperson}}, this is a reminder for your upcoming appointment on {{d.pdate}} at {{d.ptime}}. STUDENT: {{d.firstname}} {{d.middlename}} {{d.lastname}}, PURPOSE: {{d.purpose}}" name="messages">
+                            <input type="hidden" value="{{d.contactperson_email}}" name="notify_email">
+                            <button type="submit" class="btn btn-success btn-sm" >Yes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
                     <form method="POST">
                       {% csrf_token %}
                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ d.id }}"><span><i class="fa fa-trash"></i></span></button>
@@ -145,9 +171,9 @@
                               <p>This action is irreversible!</p>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                               <input type="hidden" value="{{d.id}}" name="id_delete">
-                              <button type="submit" class="btn btn-danger btn-sm" >Delete</button>
+                              <button type="submit" class="btn btn-danger btn-sm" >Yes</button>
                             </div>
                           </div>
                         </div>

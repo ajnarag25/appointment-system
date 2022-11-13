@@ -161,7 +161,7 @@ def book_app(request):
 def book_app_student(request):
     get_user = request.session['username_student']
     get_form_user = appointmentForm.objects.filter(username = get_user)
-    get_data = depts.objects.filter(is_staff = 0).values()
+    get_data = depts.objects.filter(is_staff = 0, is_active = 1).values()
     get_appointment = appointmentGuest(request.POST or None)
 
     store_form_user_data = []
@@ -170,7 +170,6 @@ def book_app_student(request):
 
     if request.method == 'POST':
         if get_appointment.is_valid():
-            print(get_appointment)
             get_appointment.save()
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_student')
@@ -187,7 +186,7 @@ def book_app_student(request):
 def book_app_alumni(request):
     get_user = request.session['username_student']
     get_form_user = appointmentForm.objects.filter(username = get_user)
-    get_data = depts.objects.filter(is_staff = 0).values()
+    get_data = depts.objects.filter(is_staff = 0, is_active = 1).values()
     get_appointment = appointmentGuest(request.POST or None)
 
     store_form_user_data = []
@@ -196,7 +195,6 @@ def book_app_alumni(request):
 
     if request.method == 'POST':
         if get_appointment.is_valid():
-            print(get_appointment)
             get_appointment.save()
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_alumni')
@@ -453,18 +451,31 @@ def create_manage(request):
         get_last_name = request.POST.get('last_name')
         get_email = request.POST.get('email')
         get_department = request.POST.get('department')
+        get_position = request.POST.get('position')
         depts.objects.filter(id=get_id_update_admin).update(username=get_username)
         depts.objects.filter(id=get_id_update_admin).update(first_name=get_first_name)
         depts.objects.filter(id=get_id_update_admin).update(last_name=get_last_name)
         depts.objects.filter(id=get_id_update_admin).update(email=get_email)
         depts.objects.filter(id=get_id_update_admin).update(department=get_department)
+        depts.objects.filter(id=get_id_update_admin).update(position=get_position)
         messages.info(request,'Successfully Updated')
+
 
     get_id_delete_admin = request.POST.get('id_delete_admin')
     if get_id_delete_admin != None:
         delete_admin = depts.objects.filter(id=get_id_delete_admin)
         delete_admin.delete()
         messages.info(request,'Successfully Deleted!')
+
+    get_id_disable_admin = request.POST.get('id_disable_admin')
+    if get_id_disable_admin != None:
+        depts.objects.filter(id=get_id_disable_admin).update(is_active=False)
+        messages.info(request,'Successfully Disabled the Account!')
+
+    get_id_enable_admin = request.POST.get('id_enable_admin')
+    if get_id_enable_admin != None:
+        depts.objects.filter(id=get_id_enable_admin).update(is_active=True)
+        messages.info(request,'Successfully Enabled the Account!')
 
     get_id_update_student = request.POST.get('id_update_student')
     if get_id_update_student != None:
@@ -479,6 +490,7 @@ def create_manage(request):
         delete_student = depts.objects.filter(id=get_id_delete_student)
         delete_student.delete()
         messages.info(request,'Successfully Deleted!')
+
 
     signup_admin = admin_reg()
     if request.method == 'POST':

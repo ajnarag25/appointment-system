@@ -13,6 +13,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
+<style>
+    #id2{display: none;}
+    #id3{display: none;}
+    #id4{display: none;}
+    #id5{display: none;}
+    #id6{display: none;}
+    #id7{display: none;}
+    #id8{display: none;}
+    #id9{display: none;}
+    #id10{display: none;}
+    #id11{display: none;}
+    #id12{display: none;}
+    #id13{display: none;}
+</style>
 <body>
     
     <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
@@ -161,15 +175,15 @@
                     </div>
                     <div class="col-md-4">
                         <label for="inputDept" class="form-label">Department</label>
-                        <select id="inputDept" class="form-select" name="dept" required>
+                        <select class="form-select" name="dept" id="id1" onchange="myFunction()" required>
                             <option value="" selected disabled>Select Department</option>
                             <option value="OAA">Office of Academic Affair (OAA)</option>
                             <option value="DIT">Department of Information Technology (DIT)</option>
                             <option value="DLA">Department of Liberal Arts (DLA)</option>
                             <option value="OCL">Office of Campus Library (OCL)</option>
+                            <option value="DED">Department of Education (DED)</option>
                             <option value="DMS">Department of Mathematics and Science (DMS)</option>
                             <option value="DOE">Department of Engineering (DOE)</option>
-                            <option value="DED">Department of Education (DED)</option>
                             <option value="OSA">Office of Student Affairs (OSA)</option>
                             <option value="UITC">University Information Technology Center (UITC)</option>
                             <option value="DPE">Department of Physical Education (DPE)</option>
@@ -179,35 +193,101 @@
                     </div>
                     <div class="col-md-4">
                         <label for="inputContactP" class="form-label">Contact Person</label>
-                        <select id="inputContactP" class="form-select" name="contactperson" required>
-                        <option selected>Select Contact Person</option>
-                        {% for a in names %}
-                        {% if a.department == 'OAA' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
-                        {% elif a.department == 'DIT' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
-                        {% elif a.department == 'DLA' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
-                        {% elif a.department == 'OCL' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
-                        {% elif a.department == 'DED' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Education ({{a.department}})</option>
-                        {% elif a.department == 'DMS' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
-                        {% elif a.department == 'DOE' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
-                        {% elif a.department == 'OSA' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
-                        {% elif a.department == 'UITC' %}
-                        <option>{{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
-                        {% elif a.department == 'DPE' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
-                        {% elif a.department == 'SD' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
-                        {% elif a.department == 'RE' %}
-                        <option>{{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
-                        {% endif %}
-                    {% endfor %}
+                        <select id="id2" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'OAA' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id3" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DIT' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id4" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DLA' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id5" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'OCL' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id6" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DED' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Education ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id7" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DMS' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id8" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DOE' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id9" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'OSA' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id10" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'UITC' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id11" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'DPE' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id12" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'SD' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <select id="id13" class="form-select" name="contactperson">
+                            <option selected disabled value="">Select Contact Person</option>
+                            {% for a in names %}
+                                {% if a.department == 'RE' %}
+                                <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
+                                {% endif %}
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
@@ -309,8 +389,6 @@
                 i7 = $('#inputYearl').val();
                 i8 = $('#inputYearg').val();
                 i9 = $('#inputIdn').val();
-                i10 = $('#inputDept').val();
-                i11 = $('#inputContactP').val();
                 i12 = $('#inputDate').val();
                 i13 = $('#inputTime').val();
                 i14 = $('#floatingTextarea2').val();
@@ -323,14 +401,183 @@
                 document.getElementById('yrlevel').innerHTML = "Year Level:" + " " + i7 + " " + "year/s";
                 document.getElementById('yrgrad').innerHTML = "Year Graduate:" + " " + i8 + " " + "year/s";
                 document.getElementById('studentid').innerHTML = "Student I.D:" + " " + i9;
-                document.getElementById('dept').innerHTML = "Department:" + " " + i10;
-                document.getElementById('contactperson').innerHTML = "Contact Person:" + " " + i11;
                 document.getElementById('pdate').innerHTML = "Preferred Date:" + " " + i12;
                 document.getElementById('ptime').innerHTML = "Preferred Time:" + " " + i13;
                 document.getElementById('purpose').innerHTML = "Purpose:" + " " + i14;
             })
 
         })
+        function myFunction() {
+            var x = document.getElementById("id1").value;
+            if (x == "OAA"){
+                document.getElementById("id2").style.display = "block";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DIT"){
+                document.getElementById("id3").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DLA"){
+                document.getElementById("id4").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "OCL"){
+                document.getElementById("id5").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DED"){
+                document.getElementById("id6").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DMS"){
+                document.getElementById("id7").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DOE"){
+                document.getElementById("id8").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "OSA"){
+                document.getElementById("id9").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "UITC"){
+                document.getElementById("id10").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "DPE"){
+                document.getElementById("id11").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "SD"){
+                document.getElementById("id12").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id13").style.display = "none";
+            } 
+            if (x == "RE"){
+                document.getElementById("id13").style.display = "block";
+                document.getElementById("id2").style.display = "none";
+                document.getElementById("id3").style.display = "none";
+                document.getElementById("id4").style.display = "none";
+                document.getElementById("id5").style.display = "none";
+                document.getElementById("id6").style.display = "none";
+                document.getElementById("id7").style.display = "none";
+                document.getElementById("id8").style.display = "none";
+                document.getElementById("id9").style.display = "none";
+                document.getElementById("id10").style.display = "none";
+                document.getElementById("id11").style.display = "none";
+                document.getElementById("id12").style.display = "none";
+            } 
+        }
     </script>
 
 </body>

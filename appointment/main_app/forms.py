@@ -8,7 +8,7 @@ from .models import *
 class admin_reg(UserCreationForm):
 	class Meta:
 		model = depts
-		fields = ['department', 'username', 'first_name', 'last_name', 'password1', 'password2', 'email']
+		fields = ['position','department', 'username', 'first_name', 'last_name', 'password1', 'password2', 'email']
 
 class student_reg(UserCreationForm):
 	class Meta:

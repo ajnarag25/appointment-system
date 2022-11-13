@@ -18,8 +18,13 @@ class depts(AbstractUser):
         ('SD','Security Department'),
         ('RE','Research & Extension'),
     ]
-    
+    positiontype = [
+        ('Head','Head'),
+        ('Faculty','Faculty'),
+    ]
+
     department = models.CharField(max_length=200, choices = admintype, verbose_name = 'department')
+    position = models.CharField(max_length=200, choices = positiontype, verbose_name = 'position')
 
 class appointmentForm(models.Model):
     firstname = models.CharField(max_length=100)

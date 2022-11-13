@@ -83,29 +83,29 @@
                         <option selected disabled>Select Contact Person</option>
                         {% for a in names %}
                             {% if a.department == 'OAA' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Academic Affair ({{a.department}})</option>
                             {% elif a.department == 'DIT' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Information Technology ({{a.department}})</option>
                             {% elif a.department == 'DLA' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Liberal Arts ({{a.department}})</option>
                             {% elif a.department == 'OCL' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
-                            {% elif a.department == 'ORE' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Office of Research and Extension ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Campus Library ({{a.department}})</option>
+                            {% elif a.department == 'DED' %}
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Education ({{a.department}})</option>
                             {% elif a.department == 'DMS' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Mathematics and Science ({{a.department}})</option>
                             {% elif a.department == 'DOE' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Engineering ({{a.department}})</option>
                             {% elif a.department == 'OSA' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Office of Student Affairs ({{a.department}})</option>
                             {% elif a.department == 'UITC' %}
-                            <option>{{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - University Information Technology Center ({{a.department}})</option>
                             {% elif a.department == 'DPE' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Department of Physical Education ({{a.department}})</option>
                             {% elif a.department == 'SD' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Security Department ({{a.department}})</option>
                             {% elif a.department == 'RE' %}
-                            <option>{{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
+                            <option>{{a.position}} - {{a.first_name}} {{a.last_name}} - Research & Extension ({{a.department}})</option>
                             {% endif %}
                         {% endfor %}
                         </select>

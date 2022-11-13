@@ -124,7 +124,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="card card-chart" style="background-color: rgb(255, 160, 160);">
               <div class="card-header text-center">
-                <h4 class="card-title"> Canceled Appointments <i class="now-ui-icons ui-1_simple-remove"></i></h4>
+                <h4 class="card-title"> Declined Appointments <i class="now-ui-icons ui-1_simple-remove"></i></h4>
               </div>
               <div class="card-body text-center">
                 {% for declined in get_length_declined %}
@@ -175,8 +175,8 @@
                         <td>{{d.user}}</td>
                         <td>{{d.firstname}} {{d.middlename}} {{d.lastname}}</td>
                         <td>{{d.course}}</td>
-                        <td>{{d.yrlevel}} year/s</td>
-                        <td>{{d.yrgraduate}} year/s</td>
+                        <td>{{d.yrlevel}}</td>
+                        <td>{{d.yrgraduate}}</td>
                         <td>{{d.contactperson}}</td>
                         <td>{{d.purpose}}</td>
                         <td>

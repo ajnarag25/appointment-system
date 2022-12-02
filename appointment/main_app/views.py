@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.http import HttpResponse
 
+import json
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -17,6 +18,7 @@ from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
 from django.core import serializers
+from django.http import JsonResponse
 
 from datetime import date
 from docx import Document
@@ -347,9 +349,6 @@ def admin_site(request):
     get_appointment_declined = appointmentForm.objects.filter(dept = get_dept).filter(status='DECLINED').values()
     get_appointment_history = appointmentForm.objects.filter(dept = get_dept).values()
 
-    get_length_pending = len(get_appointment_pending) 
-    save_length_pending = [get_length_pending]
-    print(get_length_pending)
     if get_dept == "OAA":
         set_val = 'Office of Academic Affair'
         set_email = get_email_dept
@@ -388,7 +387,6 @@ def admin_site(request):
         'dept_val_2': get_appointment_approved, 
         'dept_val_3': get_appointment_declined, 
         'dept_val_4': get_appointment_history, 
-        'notif': save_length_pending
     }
 
 
@@ -639,3 +637,10 @@ def generatePDF(request):
     messages.info(request,'Successfully Generated a PDF file')
 
     return redirect('admin_site_re')
+
+
+def notif(request):
+    get_dept = request.session['department']
+    get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
+    get_length = len(get_appointment_pending) 
+    return JsonResponse({'data':get_length})

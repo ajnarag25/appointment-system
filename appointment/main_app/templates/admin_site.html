@@ -515,26 +515,24 @@
   })
 </script>
 
-{% for notification in notif %}
-<script type="text/javascript">
 
+<script type="text/javascript">
   var ajax_call = function() {
-    var $people = $('#people');
-  
     $.ajax({
         type: 'GET',
-        url: '/all/api',
-        success: function(people) {
-          document.getElementById("notif_num").innerHTML = '{{notification}}';
+        url: "{% url 'get_notif' %}",
+        success: function(response) {
+          document.getElementById("notif_num").innerHTML = response.data;
+        },
+        error: function(response){
+          console.log('something went wrong!');
         }
       });
   };
   
-  var interval = 5000; // 5 secs
+  var interval = 1000; // 1 sec
   setInterval(ajax_call, interval);
  </script>
-
- {% endfor %}
 
 </body>
 </html>

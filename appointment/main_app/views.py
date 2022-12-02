@@ -16,6 +16,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
+from django.core import serializers
 
 from datetime import date
 from docx import Document
@@ -173,6 +174,9 @@ def book_app_student(request):
             get_appointment.save()
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_student')
+        else:
+            messages.info(request,'Error Occured Submitting the Appointment Form')
+            return redirect('book_app_student')
 
     context = {
         'names': get_data,
@@ -198,6 +202,9 @@ def book_app_alumni(request):
             get_appointment.save()
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_alumni')
+        else:
+            messages.info(request,'Error Occured Submitting the Appointment Form')
+            return redirect('book_app_alumni')
 
     context = {
         'names': get_data,
@@ -205,7 +212,6 @@ def book_app_alumni(request):
         'get_user_data': store_form_user_data
     }
     return render(request, "book_app_alumni.html", context)
-
 
 def css_form(request):
     get_css_form = formcss(request.POST or None)
@@ -215,6 +221,9 @@ def css_form(request):
             print(get_css_form)
             get_css_form.save()
             messages.info(request,'Successfully Submitted')
+            return redirect('css_form')
+        else:
+            messages.info(request,'Error Occured Submitting the Appointment Form')
             return redirect('css_form')
 
     return render(request, "css_form.html")
@@ -241,6 +250,7 @@ def admin_site(request):
     get_email_dept = request.session['email']
     get_id_accept = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
+    get_id_canceled = request.POST.get('id_cancel')
     get_id_delete = request.POST.get('id_delete')
     get_id_reapproved = request.POST.get('id_reapproved')
 
@@ -302,11 +312,11 @@ def admin_site(request):
     checkapp3 = appointmentForm.objects.filter(id = get_id_reapproved).update(status='APPROVED')
     if checkapp3 == 1:
         get_name = request.POST.get('student_name_reapprove')
-        appointmentForm.objects.filter(id = get_id_reapproved).update(notes='Your Appointment Successfully Approved')
+        appointmentForm.objects.filter(id = get_id_reapproved).update(notes='Your Appointment Successfully Re-Approved')
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('reapprove_email')
         hostemail = 'tupcappointment2022@gmail.com'
-        msg = 'Your Appointment Successfully Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        msg = 'Your Appointment Successfully Re-Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
         send_mail(
             composed_name_header,
             msg,
@@ -315,11 +325,31 @@ def admin_site(request):
         )
         messages.info(request,'Successfully Approved')
 
+    checkapp4= appointmentForm.objects.filter(id = get_id_canceled).update(status='DECLINED')
+    if checkapp4 == 1:
+        cancel_compose = request.POST.get('cancel_msg')
+        get_name = request.POST.get('student_name_cancel')
+        appointmentForm.objects.filter(id = get_id_canceled).update(notes=cancel_compose)
+        composed_name_header = 'Good day,' + ' ' + get_name
+        get_email = request.POST.get('cancel_email')
+        hostemail = 'tupcappointment2022@gmail.com'
+        msg = cancel_compose + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        send_mail(
+            composed_name_header,
+            msg,
+            hostemail,
+            [get_email],
+        )
+        messages.info(request,'Successfully Canceled')
+
     get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
     get_appointment_approved = appointmentForm.objects.filter(dept = get_dept).filter(status='APPROVED').values()
     get_appointment_declined = appointmentForm.objects.filter(dept = get_dept).filter(status='DECLINED').values()
     get_appointment_history = appointmentForm.objects.filter(dept = get_dept).values()
 
+    get_length_pending = len(get_appointment_pending) 
+    save_length_pending = [get_length_pending]
+    print(get_length_pending)
     if get_dept == "OAA":
         set_val = 'Office of Academic Affair'
         set_email = get_email_dept
@@ -358,6 +388,7 @@ def admin_site(request):
         'dept_val_2': get_appointment_approved, 
         'dept_val_3': get_appointment_declined, 
         'dept_val_4': get_appointment_history, 
+        'notif': save_length_pending
     }
 
 
@@ -491,14 +522,20 @@ def create_manage(request):
         delete_student.delete()
         messages.info(request,'Successfully Deleted!')
 
-
     signup_admin = admin_reg()
     if request.method == 'POST':
-        signup_admin = admin_reg(request.POST)
-        if signup_admin.is_valid():
-            signup_admin.save()
-            messages.info(request,'Successfully Created Admin Account!')
-            return redirect('create_manage')
+        checkdept = request.POST.get('department')
+        
+        if depts.objects.filter(position='Head', department=checkdept).exists():
+            messages.info(request,'Head Department is Already Existed')
+        else:
+            signup_admin = admin_reg(request.POST)
+            if signup_admin.is_valid():
+                signup_admin.save()
+                messages.info(request,'Successfully Created Admin Account')
+                return redirect('create_manage')
+
+    
 
     context = {
         'signup_admin': signup_admin,

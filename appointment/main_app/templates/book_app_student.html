@@ -114,33 +114,33 @@
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="inputFirst" class="form-label">First name</label>
+                        <label for="inputFirst" class="form-label">First name <span style="color:red">*</span></label>
                         <input type="text" class="form-control" id="inputFirst" name="firstname" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputMiddle" class="form-label">Middle name</label>
+                        <label for="inputMiddle" class="form-label">Middle name <span style="color:red">*</span></label>
                         <input type="text" class="form-control" id="inputMiddle" name="middlename" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputLast" class="form-label">Last name</label>
+                        <label for="inputLast" class="form-label">Last name <span style="color:red">*</span></label>
                         <input type="text" class="form-control" id="inputLast" name="lastname" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="inputEmail" class="form-label">Email Address</label>
+                        <label for="inputEmail" class="form-label">Email Address <span style="color:red">*</span></label>
                         <input type="text" class="form-control" id="inputEmail" name="email" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputContact" class="form-label">Contact Number</label>
+                        <label for="inputContact" class="form-label">Contact Number <span style="color:red">*</span></label>
                         <input type="number" class="form-control" id="inputContact" name="contact" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="inputCourse" class="form-label">Select Course</label>
+                        <label for="inputCourse" class="form-label">Select Course <span style="color:red">*</span></label>
                         <select id="inputCourse" class="form-select" name="course" required>
                         <option selected>Courses.</option>
                         <option value="BSCE">BSCE - Bachelor of Science in Civil Engineering</option>
@@ -163,18 +163,18 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputYearl" class="form-label">Year Level</label>
+                        <label for="inputYearl" class="form-label">Year Level <span style="color:red">*</span></label>
                         <input type="number" class="form-control" id="inputYearl" name="yrlevel" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="inputIdn" class="form-label">Student ID</label>
+                        <label for="inputIdn" class="form-label">Student ID <span style="color:red">*</span></label>
                         <input type="text" class="form-control" id="inputIdn" name="studentnum" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputDept" class="form-label">Department</label>
+                        <label for="inputDept" class="form-label">Department <span style="color:red">*</span></label>
                         <select class="form-select" name="dept" id="id1" onchange="myFunction()" required>
                             <option value="" selected disabled>Select Department</option>
                             <option value="OAA">Office of Academic Affair (OAA)</option>
@@ -192,7 +192,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label for="inputContactP" class="form-label">Contact Person</label>
+                        <label for="inputContactP" class="form-label">Contact Person <span style="color:red">*</span></label>
                         <select id="id2" class="form-select" name="contactperson">
                             <option selected disabled value="">Select Contact Person</option>
                             {% for a in names %}
@@ -294,18 +294,18 @@
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="inputDate" class="form-label">Preferred Date</label>
+                        <label for="inputDate" class="form-label">Preferred Date <span style="color:red">*</span></label>
                         <input type="date" class="form-control" id="inputDate" name="pdate" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="inputTime" class="form-label">Preferred Time</label>
+                        <label for="inputTime" class="form-label">Preferred Time <span style="color:red">*</span></label>
                         <input type="time" class="form-control" id="inputTime" name="ptime" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="floatingTextarea2">Purpose</label>
+                        <label for="floatingTextarea2">Purpose <span style="color:red">*</span></label>
                         <input type="hidden" class="form-control" id="" name="yrgraduate" value='N/A'>
                         <input type="hidden" class="form-control" id="" name="status" value="PENDING" >
                         <input type="hidden" class="form-control" id="" name="notes" value="N/A" >
@@ -371,7 +371,10 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h4>Dito nakalagay ung data privacy act</h4>
+                                <h5>Data Privacy Notice and Consent I hereby authorize the Technological University of the Philippines at Cavite to use, 
+                                    collect and process my personal information for legitimate purposes and allow authorized personnel to process the information in accordance with the Data Privacy Policies of the Department.  <br><br>
+                                    By using this form, you are indicating your understanding and acceptance of the conditions as set out below
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -397,7 +400,6 @@
     <script>
         Swal.fire({
             title: '{{message}}',
-            icon: 'success',
             confirmButtonColor: '#d33',
             })
     </script>

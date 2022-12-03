@@ -174,6 +174,16 @@ def book_app_student(request):
     if request.method == 'POST':
         if get_appointment.is_valid():
             get_appointment.save()
+            composed_name_header = 'Good day' 
+            get_email_dept = request.POST.get('contactperson')
+            hostemail = 'tupcappointment2022@gmail.com'
+            msg = 'You Have New Pending Appointment' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+            send_mail(
+                composed_name_header,
+                msg,
+                hostemail,
+                [get_email_dept],
+            )
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_student')
         else:
@@ -202,6 +212,16 @@ def book_app_alumni(request):
     if request.method == 'POST':
         if get_appointment.is_valid():
             get_appointment.save()
+            composed_name_header = 'Good day' 
+            get_email_dept = request.POST.get('contactperson')
+            hostemail = 'tupcappointment2022@gmail.com'
+            msg = 'You Have New Pending Appointment' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+            send_mail(
+                composed_name_header,
+                msg,
+                hostemail,
+                [get_email_dept],
+            )
             messages.info(request,'Successfully Submitted')
             return redirect('book_app_alumni')
         else:

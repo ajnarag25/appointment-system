@@ -163,11 +163,11 @@ def book_app(request):
 
 @login_required(login_url='login_student')
 def book_app_student(request):
+    today = date.today()
     get_user = request.session['username_student']
     get_form_user = appointmentForm.objects.filter(username = get_user)
     get_data = depts.objects.filter(is_staff = 0, is_active = 1).values()
     get_appointment = appointmentGuest(request.POST or None)
-
     store_form_user_data = []
     for x in get_form_user:
         store_form_user_data.append(x)
@@ -184,7 +184,8 @@ def book_app_student(request):
     context = {
         'names': get_data,
         'username': get_user,
-        'get_user_data': store_form_user_data
+        'get_user_data': store_form_user_data,
+        'date_today': today
     }
     return render(request, "book_app_student.html", context)
 
@@ -283,6 +284,7 @@ def admin_site(request):
         get_email_department = request.POST.get('department_email')
         appointmentForm.objects.filter(id = get_id_accept).update(notes='Your Appointment Successfully Approved')
         appointmentForm.objects.filter(id = get_id_accept).update(contactperson_email=get_email_department)
+        appointmentForm.objects.filter(id = get_id_accept).update(sd_status='ONGOING')
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('accept_email')
         hostemail = 'tupcappointment2022@gmail.com'
@@ -316,6 +318,7 @@ def admin_site(request):
     if checkapp3 == 1:
         get_name = request.POST.get('student_name_reapprove')
         appointmentForm.objects.filter(id = get_id_reapproved).update(notes='Your Appointment Successfully Re-Approved')
+        appointmentForm.objects.filter(id = get_id_reapproved).update(sd_status='ONGOING')
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('reapprove_email')
         hostemail = 'tupcappointment2022@gmail.com'
@@ -395,13 +398,13 @@ def admin_site(request):
 
 @login_required(login_url='login_admin')
 def admin_site_sg(request):
-    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
+    today = date.today()
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', date_submit = today, sd_status='ONGOING').values()
     get_id_delete = request.POST.get('id_delete')
     get_email_check = request.POST.get('notify_email')
 
     if get_id_delete != None:
-        delete_app = appointmentForm.objects.filter(id=get_id_delete)
-        delete_app.delete()
+        appointmentForm.objects.filter(id=get_id_delete).update(sd_status='DONE')
         messages.info(request,'Successfully Deleted!')
 
 
@@ -648,7 +651,6 @@ def notif(request):
 
 def sd_notif(request):
     today = date.today()
-    print(today)
-    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED').values()
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', date_submit = today, sd_status='ONGOING').values()
     get_length = len(get_appointment_approved) 
     return JsonResponse({'sd':get_length})

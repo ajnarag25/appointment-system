@@ -46,6 +46,8 @@ class appointmentForm(models.Model):
     notes = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
     contactperson_email = models.CharField(max_length=100)
+    date_submit = models.CharField(max_length=100)
+    sd_status = models.CharField(max_length=100)
 
 class cssform(models.Model):
     name = models.CharField(max_length=100)

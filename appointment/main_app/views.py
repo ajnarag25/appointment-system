@@ -42,11 +42,8 @@ def login_superuser(request):
         return redirect ('dashboard')
     else:
         if request.method == 'POST':
-            print('geh lods')
             userrr = request.POST.get('username')
             passw = request.POST.get('password') 
-            print(userrr)
-            print(passw)
             user = authenticate(request, username=userrr,password=passw)
             if user is not None:
                 get_superuser = depts.objects.get(username=userrr)
@@ -147,7 +144,7 @@ def signup_student(request):
 
 #APPOINTMENTS
 def book_app(request):
-    get_data = depts.objects.filter(is_staff = 0).values()
+    get_data = depts.objects.filter(is_staff = 0, is_active = 1).values()
     get_appointment = appointmentGuest(request.POST or None)
     if request.method == 'POST':
         if get_appointment.is_valid():
@@ -155,7 +152,8 @@ def book_app(request):
             get_appointment.save()
             messages.info(request,'Successfully Submitted')
             return redirect('book_app')
-
+        else:
+            messages.info(request,'Error Occured Submitting the Appointment Form')
     context = {
         'names': get_data
     }
@@ -478,20 +476,18 @@ def create_manage(request):
 
     get_id_update_admin = request.POST.get('id_update_admin')
     if get_id_update_admin != None:
-        get_username = request.POST.get('username')
-        get_first_name = request.POST.get('first_name')
-        get_last_name = request.POST.get('last_name')
-        get_email = request.POST.get('email')
-        get_department = request.POST.get('department')
-        get_position = request.POST.get('position')
-        depts.objects.filter(id=get_id_update_admin).update(username=get_username)
-        depts.objects.filter(id=get_id_update_admin).update(first_name=get_first_name)
-        depts.objects.filter(id=get_id_update_admin).update(last_name=get_last_name)
-        depts.objects.filter(id=get_id_update_admin).update(email=get_email)
-        depts.objects.filter(id=get_id_update_admin).update(department=get_department)
-        depts.objects.filter(id=get_id_update_admin).update(position=get_position)
-        messages.info(request,'Successfully Updated')
-
+        get_username = request.POST.get('e_username')
+        get_first_name = request.POST.get('e_first_name')
+        get_last_name = request.POST.get('e_last_name')
+        get_email = request.POST.get('e_email')
+        if depts.objects.filter(username = get_username, first_name= get_first_name, last_name= get_last_name, email=get_email).exists():
+            messages.info(request,'No Changes Detected')
+        else:
+            depts.objects.filter(id=get_id_update_admin).update(username=get_username)
+            depts.objects.filter(id=get_id_update_admin).update(first_name=get_first_name)
+            depts.objects.filter(id=get_id_update_admin).update(last_name=get_last_name)
+            depts.objects.filter(id=get_id_update_admin).update(email=get_email)
+            messages.info(request,'Successfully Updated')
 
     get_id_delete_admin = request.POST.get('id_delete_admin')
     if get_id_delete_admin != None:
@@ -501,21 +497,30 @@ def create_manage(request):
 
     get_id_disable_admin = request.POST.get('id_disable_admin')
     if get_id_disable_admin != None:
-        depts.objects.filter(id=get_id_disable_admin).update(is_active=False)
-        messages.info(request,'Successfully Disabled the Account!')
+        if depts.objects.filter(id=get_id_disable_admin, is_active=False).exists():
+            messages.info(request,'Account is Already Disabled')
+        else:
+            depts.objects.filter(id=get_id_disable_admin).update(is_active=False)
+            messages.info(request,'Successfully Disabled the Account!')
 
     get_id_enable_admin = request.POST.get('id_enable_admin')
     if get_id_enable_admin != None:
-        depts.objects.filter(id=get_id_enable_admin).update(is_active=True)
-        messages.info(request,'Successfully Enabled the Account!')
+        if depts.objects.filter(id=get_id_enable_admin, is_active=True).exists():
+            messages.info(request,'Account is Already Enabled')
+        else:
+            depts.objects.filter(id=get_id_enable_admin).update(is_active=True)
+            messages.info(request,'Successfully Enabled the Account!')
 
     get_id_update_student = request.POST.get('id_update_student')
     if get_id_update_student != None:
-        get_username = request.POST.get('username')
-        get_email = request.POST.get('email')
-        depts.objects.filter(id=get_id_update_student).update(username=get_username)
-        depts.objects.filter(id=get_id_update_student).update(email=get_email)
-        messages.info(request,'Successfully Updated')
+        get_username = request.POST.get('s_username')
+        get_email = request.POST.get('s_email')
+        if depts.objects.filter(username = get_username, email=get_email).exists():
+            messages.info(request,'No Changes Detected')
+        else:
+            depts.objects.filter(id=get_id_update_student).update(username=get_username)
+            depts.objects.filter(id=get_id_update_student).update(email=get_email)
+            messages.info(request,'Successfully Updated')
 
     get_id_delete_student = request.POST.get('id_delete_student')
     if get_id_delete_student != None:
@@ -525,18 +530,38 @@ def create_manage(request):
 
     signup_admin = admin_reg()
     if request.method == 'POST':
-        checkdept = request.POST.get('department')
-        
-        if depts.objects.filter(position='Head', department=checkdept).exists():
-            messages.info(request,'Head Department is Already Existed')
-        else:
-            signup_admin = admin_reg(request.POST)
-            if signup_admin.is_valid():
-                signup_admin.save()
-                messages.info(request,'Successfully Created Admin Account')
-                return redirect('create_manage')
+        signup_admin = admin_reg(request.POST)
+        get_pos = request.POST.get('position')
+        get_dept = request.POST.get('department')
+        get_idnum = request.POST.get('username')
+        get_mail = request.POST.get('email')
 
-    
+        if get_pos == 'Head':
+            if depts.objects.filter(position = 'Head', department= get_dept).exists():
+                messages.info(request, 'Head Department is already exist')
+            elif depts.objects.filter(username = get_idnum).exists():
+                messages.info(request, 'I.D Number Already Exists')
+            elif depts.objects.filter(email=get_mail).exists():
+                messages.info(request, 'Email Already Exists')
+            else:
+                signup_admin = admin_reg(request.POST)
+                if signup_admin.is_valid():
+                    signup_admin.save()
+                    messages.info(request,'Successfully Created Admin Account')
+                    return redirect('create_manage')
+
+        else:
+            if depts.objects.filter(username = get_idnum).exists():
+                messages.info(request, 'I.D Number Already Exists')
+            elif depts.objects.filter(email=get_mail).exists():
+                messages.info(request, 'Email Already Exists')
+            else:
+                signup_admin = admin_reg(request.POST)
+                if signup_admin.is_valid():
+                    signup_admin.save()
+                    messages.info(request,'Successfully Created Admin Account')
+                    return redirect('create_manage')
+        
 
     context = {
         'signup_admin': signup_admin,

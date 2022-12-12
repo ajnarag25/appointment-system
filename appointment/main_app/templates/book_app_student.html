@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputContact" class="form-label">Contact Number <span style="color:red">*</span></label>
-                        <input type="number" class="form-control" id="inputContact" name="contact" required>
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="11" class="form-control" id="inputContact" name="contact" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
@@ -165,14 +165,14 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputYearl" class="form-label">Year Level <span style="color:red">*</span></label>
-                        <input type="number" class="form-control" id="inputYearl" name="yrlevel" required>
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="1" class="form-control" id="inputYearl" name="yrlevel" required>
                     </div>
                 </div> 
                 <div class="w-100"></div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="inputIdn" class="form-label">Student ID <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" id="inputIdn" name="studentnum" required>
+                        <label for="inputIdn" class="form-label">Student ID ex. (180102) <span style="color:red">*</span></label>
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="6" class="form-control" id="inputIdn" name="studentnum" required>
                     </div>
                     <div class="col-md-4">
                         <label for="inputDept" class="form-label">Department <span style="color:red">*</span></label>

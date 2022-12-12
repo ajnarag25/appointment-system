@@ -138,7 +138,7 @@
                     </select>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="number" class="form-control" name="username" placeholder="Enter I.D Number" required/>
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="5" class="form-control" name="username" placeholder="Enter I.D Number" required/>
                       </div>
                     <div class="form-outline mb-4">
                       <input type="text" class="form-control" name="first_name" placeholder="Enter Firstname" required/>
@@ -239,41 +239,18 @@
                                   {% csrf_token %}
                                   <br>
                                   <div class="form-outline mb-4">
-                                      <input type="text" class="form-control" name="username" value={{f.username}} required/>
+                                      <input type="text" class="form-control" name="e_username" value={{f.username}} required/>
                                     </div>
                                   <div class="form-outline mb-4">
-                                    <input type="text" class="form-control" name="first_name" value={{f.first_name}} required/>
+                                    <input type="text" class="form-control" name="e_first_name" value={{f.first_name}} required/>
                                   </div>
                                   <div class="form-outline mb-4">
-                                    <input type="text" class="form-control" name="last_name" value={{f.last_name}} required/>
+                                    <input type="text" class="form-control" name="e_last_name" value={{f.last_name}} required/>
                                   </div>
                                   <div class="form-outline mb-4">
-                                      <input type="text" class="form-control" name="email" value={{f.email}} required/>
+                                      <input type="text" class="form-control" name="e_email" value={{f.email}} required/>
                                     </div>
-                                  <div class="form-outline mb-4">
-                                    <select name="department" class="form-control" id="" required>
-                                      <option value="{{f.department}}" selected>{{f.department}}</option>
-                                      <option value="OAA">Office of Academic Affair (OAA)</option>
-                                      <option value="DIT">Department of Information Technology (DIT)</option>
-                                      <option value="DLA">Department of Liberal Arts (DLA)</option>
-                                      <option value="OCL">Office of Campus Library (OCL)</option>
-                                      <option value="DMS">Department of Mathematics and Science (DMS)</option>
-                                      <option value="DOE">Department of Engineering (DOE)</option>
-                                      <option value="DED">Department of Education (DED)</option>
-                                      <option value="OSA">Office of Student Affairs (OSA)</option>
-                                      <option value="UITC">University Information Technology Center (UITC)</option>
-                                      <option value="DPE">Department of Physical Education (DPE)</option>
-                                      <option value="SD">Security Department (SD)</option>
-                                      <option value="RE">Office of Research & Extension (ORE)</option>
-                                  </select>
-                                  </div>
-                                  <div class="form-outline mb-4">
-                                    <select name="position" class="form-control" id="" required>
-                                      <option value="{{f.position}}" selected>{{f.position}}</option>
-                                      <option value="Head">Head</option>
-                                      <option value="Faculty">Faculty</option>
-                                  </select>
-                                  </div>
+                                
                                   <br>
                               </div>
                                 <div class="modal-footer">
@@ -410,10 +387,10 @@
                                 {% csrf_token %}
                                 <br>
                                 <div class="form-outline mb-4">
-                                    <input type="text" class="form-control" name="username" value={{s.username}} required/>
+                                    <input type="text" class="form-control" name="s_username" value={{s.username}} required/>
                                   </div>
                                 <div class="form-outline mb-4">
-                                    <input type="text" class="form-control" name="email" value={{s.email}} required/>
+                                    <input type="text" class="form-control" name="s_email" value={{s.email}} required/>
                                   </div>
                                 <br>
                             </div>

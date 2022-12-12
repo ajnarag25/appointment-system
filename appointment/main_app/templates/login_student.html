@@ -37,7 +37,7 @@
                 <h3 class="text-center">Student - Login</h3>
                 <br>
                 <div class="form-outline mb-4">
-                    <input type="number" id="form1Example2" name="username" class="form-control" placeholder="I.D Number" required/>
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="6" id="form1Example2" name="username" class="form-control" placeholder="I.D Number" required/>
                 </div>
                 <div class="form-outline mb-4">
                     <input type="password" id="form1Example2" name="password" class="form-control" placeholder="Password" required/>

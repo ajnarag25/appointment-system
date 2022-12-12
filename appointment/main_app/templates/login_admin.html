@@ -56,7 +56,7 @@
                     </select>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="number" id="" class="form-control" name="username" placeholder="I.D Number" required/>
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="5" class="form-control" name="username" placeholder="I.D Number" required/>
                   </div>
                 <div class="form-outline mb-4">
                   <input type="password" id="" class="form-control" name="password" placeholder="Password" required/>
@@ -93,5 +93,6 @@
             })
     </script>
     {% endfor %}
+
 </body>
 </html>

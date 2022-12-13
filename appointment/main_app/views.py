@@ -71,6 +71,9 @@ def login_admin(request):
                 get_dept = depts.objects.get(username=userrr)
                 emails = get_dept.email
                 departs = get_dept.department
+                firsts = get_dept.first_name
+                lasts = get_dept.last_name
+                pos = get_dept.position
                 print(get_dept)
                 if get_dept.department == "":
                     messages.info(request,'Something went wrong')
@@ -90,6 +93,9 @@ def login_admin(request):
                         request.session['email'] = emails
                         request.session['username'] = userrr
                         request.session['department'] = departs
+                        request.session['first_name'] = firsts
+                        request.session['last_name'] = lasts
+                        request.session['position'] = pos
                         return redirect('admin_site')
 
             else:
@@ -250,6 +256,42 @@ def logoutStudent(request):
 def admin_site(request):
     get_dept = request.session['department']
     get_email_dept = request.session['email']
+    get_first = request.session['first_name']
+    get_last = request.session['last_name']
+    get_position = request.session['position']
+
+    if get_dept == "OAA":
+        dept_names = 'Office of Academic Affair'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DIT":
+        dept_names = 'Department of Information Technology'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DLA":
+        dept_names = 'Department of Liberal Arts'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "OCL":
+        dept_names = 'Office of Campus Library'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DED":
+        dept_names = 'Department of Education'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DMS":
+        dept_names = 'Department of Mathematics and Science'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DOE":
+        dept_names = 'Department of Engineering'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "OSA":
+        dept_names = 'Office of Student Affairs'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "UITC":
+        dept_names = 'University Information Technology Center '
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+    elif get_dept == "DPE":
+        dept_names = 'Department of Physical Education'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+
+
     get_id_accept = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
     get_id_canceled = request.POST.get('id_cancel')
@@ -346,11 +388,19 @@ def admin_site(request):
         )
         messages.info(request,'Successfully Canceled')
 
-    get_appointment_pending = appointmentForm.objects.filter(dept = get_dept).filter(status='PENDING').values()
-    get_appointment_approved = appointmentForm.objects.filter(dept = get_dept).filter(status='APPROVED').values()
-    get_appointment_declined = appointmentForm.objects.filter(dept = get_dept).filter(status='DECLINED').values()
-    get_appointment_history = appointmentForm.objects.filter(dept = get_dept).values()
+    get_appointment_pending = appointmentForm.objects.filter(dept = get_dept, contactperson=check_sessions).filter(status='PENDING').values()
+    get_appointment_approved = appointmentForm.objects.filter(dept = get_dept, contactperson=check_sessions).filter(status='APPROVED').values()
+    get_appointment_declined = appointmentForm.objects.filter(dept = get_dept, contactperson=check_sessions).filter(status='DECLINED').values()
+    get_appointment_history = appointmentForm.objects.filter(dept = get_dept, contactperson=check_sessions).values()
 
+    # check_app = appointmentForm.objects.values()
+    # for x in check_app:
+    #     trys = x['contactperson']
+    #     spliting = trys.split()
+    #     for x in spliting:
+    #         if get_last in x:
+    #             print(x)
+                
     if get_dept == "OAA":
         set_val = 'Office of Academic Affair'
         set_email = get_email_dept

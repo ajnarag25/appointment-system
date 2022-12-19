@@ -262,34 +262,34 @@ def admin_site(request):
 
     if get_dept == "OAA":
         dept_names = 'Office of Academic Affair'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DIT":
         dept_names = 'Department of Information Technology'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DLA":
         dept_names = 'Department of Liberal Arts'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "OCL":
         dept_names = 'Office of Campus Library'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DED":
         dept_names = 'Department of Education'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DMS":
         dept_names = 'Department of Mathematics and Science'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DOE":
         dept_names = 'Department of Engineering'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "OSA":
         dept_names = 'Office of Student Affairs'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "UITC":
         dept_names = 'University Information Technology Center '
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
     elif get_dept == "DPE":
         dept_names = 'Department of Physical Education'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
 
 
     get_id_accept = request.POST.get('id_accept')
@@ -321,6 +321,7 @@ def admin_site(request):
     checkapp1 = appointmentForm.objects.filter(id = get_id_accept).update(status='APPROVED')
     if checkapp1 == 1:
         get_name = request.POST.get('student_name_accept')
+        print(get_name)
         get_email_department = request.POST.get('department_email')
         appointmentForm.objects.filter(id = get_id_accept).update(notes='Your Appointment Successfully Approved')
         appointmentForm.objects.filter(id = get_id_accept).update(contactperson_email=get_email_department)
@@ -447,7 +448,8 @@ def admin_site(request):
 @login_required(login_url='login_admin')
 def admin_site_sg(request):
     today = date.today()
-    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', date_submit = today, sd_status='ONGOING').values()
+    print(today)
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', pdate = today, sd_status='ONGOING').values()
     get_id_delete = request.POST.get('id_delete')
     get_email_check = request.POST.get('notify_email')
 
@@ -726,6 +728,6 @@ def notif(request):
 
 def sd_notif(request):
     today = date.today()
-    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', date_submit = today, sd_status='ONGOING').values()
+    get_appointment_approved = appointmentForm.objects.filter(status='APPROVED', pdate = today, sd_status='ONGOING').values()
     get_length = len(get_appointment_approved) 
     return JsonResponse({'sd':get_length})

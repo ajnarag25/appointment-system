@@ -262,36 +262,37 @@ def admin_site(request):
 
     if get_dept == "OAA":
         dept_names = 'Office of Academic Affair'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DIT":
         dept_names = 'Department of Information Technology'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DLA":
         dept_names = 'Department of Liberal Arts'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "OCL":
         dept_names = 'Office of Campus Library'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DED":
         dept_names = 'Department of Education'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DMS":
         dept_names = 'Department of Mathematics and Science'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DOE":
         dept_names = 'Department of Engineering'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "OSA":
         dept_names = 'Office of Student Affairs'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "UITC":
         dept_names = 'University Information Technology Center '
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
     elif get_dept == "DPE":
         dept_names = 'Department of Physical Education'
-        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + ' ' + '('+get_dept+')'
+        check_sessions = get_position +' - '+ get_first +' ' + get_last +' - ' + dept_names + '('+get_dept+')'
 
 
+    print(check_sessions)
     get_id_accept = request.POST.get('id_accept')
     get_id_declined = request.POST.get('id_decline')
     get_id_canceled = request.POST.get('id_cancel')
@@ -321,7 +322,8 @@ def admin_site(request):
     checkapp1 = appointmentForm.objects.filter(id = get_id_accept).update(status='APPROVED')
     if checkapp1 == 1:
         get_name = request.POST.get('student_name_accept')
-        print(get_name)
+        get_date_time = request.POST.get('dtime')
+        get_departs = request.POST.get('depts')
         get_email_department = request.POST.get('department_email')
         appointmentForm.objects.filter(id = get_id_accept).update(notes='Your Appointment Successfully Approved')
         appointmentForm.objects.filter(id = get_id_accept).update(contactperson_email=get_email_department)
@@ -329,7 +331,9 @@ def admin_site(request):
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('accept_email')
         hostemail = 'tupcappointment2022@gmail.com'
-        msg = 'Your Appointment Successfully Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+
+
+        msg = 'Your Appointment Successfully Approved' + '\n \n' + 'I would like to confirm your appointment with ' + get_departs + ' at ' + get_date_time + '\n \n' + 'Your appointment is scheduled to be held at TUPC ' + get_departs + '\n \n' + 'Please feel free to contact ' + get_departs + ' if you have any questions. We look forward to seeing you have a wonderful day! ' + '\n \n' + 'Regards,' + '\n' +  get_departs
         send_mail(
             composed_name_header,
             msg,
@@ -358,12 +362,14 @@ def admin_site(request):
     checkapp3 = appointmentForm.objects.filter(id = get_id_reapproved).update(status='APPROVED')
     if checkapp3 == 1:
         get_name = request.POST.get('student_name_reapprove')
+        get_date_time_re = request.POST.get('dtime')
+        get_departs_re = request.POST.get('depts')
         appointmentForm.objects.filter(id = get_id_reapproved).update(notes='Your Appointment Successfully Re-Approved')
         appointmentForm.objects.filter(id = get_id_reapproved).update(sd_status='ONGOING')
         composed_name_header = 'Good day,' + ' ' + get_name
         get_email = request.POST.get('reapprove_email')
         hostemail = 'tupcappointment2022@gmail.com'
-        msg = 'Your Appointment Successfully Re-Approved' + '\n \n' + '- TUPC_APPOINTMENT_2022'
+        msg = 'Your Appointment Successfully Approved' + '\n \n' + 'We are confirming and re-approved the cancelled appointment that you have on ' + get_date_time_re + '. I apologize for the incovenience and short notice we hope you understand. ' + '\n \n' + 'We look forward to seeing you on ' + get_date_time_re + '. Have a wonderful day!' + '\n \n' + 'Regards,' + '\n' +  get_departs_re
         send_mail(
             composed_name_header,
             msg,

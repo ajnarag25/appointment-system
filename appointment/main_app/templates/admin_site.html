@@ -157,6 +157,8 @@
                               <input type="hidden" value="{{d.id}}" name="id_accept">
                               <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_accept">
                               <input type="hidden" value="{{d.email}}" name="accept_email">
+                              <input type="hidden" value="{{d.pdate}} {{d.ptime}}" name="dtime">
+                              <input type="hidden" value="{{d.dept}}" name="depts">
                               <input type="hidden" value="{{dept_email}}" name="department_email">
                               <button type="submit" class="btn btn-success btn-sm" >Approve</button>
                             </div>
@@ -364,6 +366,8 @@
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <input type="hidden" value="{{d.id}}" name="id_reapproved">
                               <input type="hidden" value="{{d.firstname}} {{d.middlename}} {{d.lastname}}" name="student_name_reapprove">
+                              <input type="hidden" value="{{d.pdate}} {{d.ptime}}" name="dtime">
+                              <input type="hidden" value="{{d.dept}}" name="depts">
                               <input type="hidden" value="{{d.email}}" name="reapprove_email">
                               <button type="submit" class="btn btn-success btn-sm" >Approve</button>
                             </div>
